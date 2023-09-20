@@ -26,3 +26,4 @@ Route::post('register', [App\Http\Controllers\Auth\AuthController::class, 'regis
 
 Route::post('login', [App\Http\Controllers\Auth\AuthController::class, 'login']);
 Route::post('logout', [App\Http\Controllers\Auth\AuthController::class, 'logout']);
+Route::apiResource('dosen', App\Http\Controllers\Dosen\DosenController::class);

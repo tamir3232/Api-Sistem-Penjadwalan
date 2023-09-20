@@ -21,19 +21,18 @@ class AuthController extends Controller
             'name' => 'required',
             'email'=> 'required|email',
             'password' => 'required|min:3',
-            'confirm_password' => 'required|same:password',
             'username' =>'required',
             'role' => 'required',
-    ]);
-
-    if ($validator->fails()) {
-        return response()->json([
-            'success' => false,
-            'message'=>'ada kesalahan',
-            'data' => $validator-> errors(),433
         ]);
 
-    }
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message'=>'ada kesalahan',
+                'data' => $validator-> errors(),433
+            ]);
+
+        }
 
     $user = User::create([
         'name'  =>$request->name,
@@ -68,8 +67,9 @@ public function login(Request $request)
         'password' => 'required',
 
     ]);
-    try
-    {
+    // try
+    // {
+
         $user = User::where('email', $request->email)->first();
         if(!$user){
             return response(['status' => false, 'message' => 'User Not Found']);
@@ -89,9 +89,9 @@ public function login(Request $request)
         else{
         return response (['status' => false, 'message' => ' Wrong Password']);
     }
-    } catch (\Exception $e) {
-        return response(['status' => false, 'message'=> $e -> getMessage()]);
-    }
+    // } catch (\Exception $e) {
+    //     return response(['status' => false, 'message'=> $e -> getMessage()]);
+    // }
 
 }
 
