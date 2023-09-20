@@ -12,25 +12,10 @@ use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use  HasFactory, Notifiable, HasUuids, HasApiTokens;
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'username',
-        'role',
-        'status',
-    ];
+    use HasUuids, HasApiTokens;
 
 
-
-    /**
+       /**
      * The attributes that should be hidden for serialization.
      *
      * @var array<int, string>
@@ -49,4 +34,21 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+        'username',
+        'role',
+        'status',
+    ];
+
+
+
+
 }

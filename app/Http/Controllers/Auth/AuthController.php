@@ -98,9 +98,9 @@ public function login(Request $request)
 //logout
     public function logout(Request $request)
     {
-        var_dump($request->user());
-        exit;
-        $request->user()->currentAccessToken()->delete();
+
+        $request->user()->token()->delete();
+        return "berhasil logout";
     }
 
 //data login

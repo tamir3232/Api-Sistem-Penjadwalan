@@ -25,5 +25,14 @@ use Illuminate\Support\Facades\Route;
 Route::post('register', [App\Http\Controllers\Auth\AuthController::class, 'register']);
 
 Route::post('login', [App\Http\Controllers\Auth\AuthController::class, 'login']);
-Route::post('logout', [App\Http\Controllers\Auth\AuthController::class, 'logout']);
+
 Route::apiResource('dosen', App\Http\Controllers\Dosen\DosenController::class);
+
+
+
+
+
+Route::middleware(['auth:api'])->group(function () {
+
+    Route::post('logout', [App\Http\Controllers\Auth\AuthController::class, 'logout']);
+});
