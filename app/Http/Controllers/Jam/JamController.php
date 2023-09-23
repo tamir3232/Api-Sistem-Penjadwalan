@@ -14,20 +14,11 @@ class JamController extends Controller
      */
     public function index()
     {
-        return DB::table('jam')->first();
+        return DB::table('jam')->all();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
     public function store(Request $request)
     {
         $request->validate([
@@ -36,11 +27,12 @@ class JamController extends Controller
             'akhir'=>'required'
         ]);
 
-        $add = Jam::create();([
+        $add = Jam::create([
         'range_jam'=>$request->range_jam,
         'awal'=>$request->awal,
         'akhir'=>$request->akhir,
         ]);
+        return $add;
     }
 
     /**
@@ -48,23 +40,31 @@ class JamController extends Controller
      */
     public function show($id)
     {
-        
-    }
+        $jamexist=Jam::where('id','=',$id)->first();
+        if ($jamexist)
+            {
+                return [$jamexist,];
+            };
+        return ['jam tidak tersedia'];
+}
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
+
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request,$id)
     {
-        //
+        $jamexist = Jam::where('id','=',$id);
+        if ($jamexist)
+        {$jamexist -> update(
+        [
+            'awal' => $request->awal ?? $jamexist ->awal,
+            'range_jam' => $request -> range_jam ?? $jamexist -> range_jam,
+            'akhir' => $request-> akhir ?? $jamexist ->akhir,
+        ]);return['Update success'];
+         }
+         return['Jam tidak ditemukan'];
     }
 
     /**
@@ -72,6 +72,12 @@ class JamController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $jamexist = Jam::where('id','=',$id);{
+        if ($jamexist) $jamexist -> delete();
+        {
+            return ['Jam sudah di hapus'];
+        }
+    }
+    return['jam tidak ditemukan'];
     }
 }

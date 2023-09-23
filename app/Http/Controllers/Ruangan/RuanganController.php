@@ -14,7 +14,7 @@ class RuanganController extends Controller
      */
     public function index()
     {
-        return DB::table('ruangan')->first();
+        return DB::table('ruangan')->all();
     }
 
 
@@ -24,11 +24,11 @@ class RuanganController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama' => 'required'
+            'nama' => 'required',
         ]);
 
         $add = Ruangan::create([
-            'nama'=>$request->nama,
+            'nama' => $request -> nama,
         ]);
         return $add;
 
@@ -39,37 +39,30 @@ class RuanganController extends Controller
      */
     public function show($id)
     {
-        $ruanganexist = Ruangan::where('id','=',$id);
-        
-            if ($ruanganexist=$id)
+        $ruanganexist = Ruangan::where('id','=',$id)->first();
+         if ($ruanganexist)
             {
-            return [$ruanganexist,];
+             return [$ruanganexist,];
         }
         return ('Ruangan tidak ditemukan');
-        
+
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        
-    }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, $id)
     {
-        $ruanganexist = Ruangan::where('id','=',$id);
+        $ruanganexist = Ruangan::where('id','=',$id)->first();
 
         if ($ruanganexist=$id)
         {
-           $ruanganexist->updata([
+           $ruanganexist->update([
             'nama'=> $request -> nama ?? $ruanganexist ->nama
            ]);
-        
+           return ['Ruangan berhasil di update', $ruanganexist,];
+
         }
         return ['ruangan tidak ditemukan'];
     }
@@ -77,10 +70,10 @@ class RuanganController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy(string $id)
     {
-        $ruanganexist = Ruangan::where('id','=',$id);
-        if ($ruanganexist = $id);
+        $ruanganexist = Ruangan::where('id','=',$id)->first();
+        if ($ruanganexist);
         {$ruanganexist->delete();
             return ['ruangan telah di hapus'];
         }

@@ -14,7 +14,7 @@ class KelasController extends Controller
      */
     public function index()
     {
-        return DB::table ('kelas')->first();
+        return DB::table ('kelas')->all();
     }
 
 
@@ -25,13 +25,13 @@ class KelasController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama' => 'required',
-            'semester' => 'required'
+            'nama'      => 'required',
+            'semester'  => 'required'
 
         ]);
         $add = Kelas::create([
-            'nama' => $request->nama,
-            'semester' => $request->semester,
+            'nama'      => $request->nama,
+            'semester'  => $request->semester,
 
         ]);
         return $add;
@@ -77,7 +77,7 @@ class KelasController extends Controller
     }
 
 
-    
+
     /**
      * Remove the specified resource from storage.
      */

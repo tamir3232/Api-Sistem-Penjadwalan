@@ -33,6 +33,7 @@ Route::apiResource('kelas', App\Http\Controllers\Kelas\KelasController::class);
 Route::apiResource('ruangan', App\Http\Controllers\Ruangan\RuanganController::class);
 Route::apiResource('jam', App\Http\Controllers\Jam\JamController::class);
 Route::apiResource('hari', App\Http\Controllers\Hari\HariController::class);
+Route::apiResource('matkul', App\Http\Controllers\Matkul\MatkulController::class);
 
 
 

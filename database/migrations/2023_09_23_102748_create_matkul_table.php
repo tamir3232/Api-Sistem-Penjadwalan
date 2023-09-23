@@ -11,11 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('jam', function (Blueprint $table) {
+        Schema::create('matkul', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('range_jam')->nullable();
-            $table->string('awal')->nullable();
-            $table->string('akhir')->nullable();
+            $table->string('kode')->unique()->nullable();
+            $table->integer('semester')->nullable();
+            $table->integer('sks')->nullable();
+            $table->string('nama')->nullable();
+            $table->string('status')->nullable();
             $table->timestamps();
         });
     }
@@ -25,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('jam');
+        Schema::dropIfExists('matkul');
     }
 };

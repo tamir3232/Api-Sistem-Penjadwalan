@@ -6,11 +6,14 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Ruangan extends Model
+class Matkul extends Model
 {
-    use HasFactory,HasUuids;
-    protected $table = 'ruangan';
+    use HasFactory, HasUuids;
+    protected $table = 'Matkul';
     protected $fillable = [
-        'nama',
-    ];
+    'kode',
+    'semester',
+    'sks',
+    'nama',
+    'status'];
 }
