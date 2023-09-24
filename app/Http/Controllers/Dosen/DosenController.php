@@ -16,7 +16,7 @@ class DosenController extends Controller
      */
     public function index()
     {
-        return DB::table('dosens')->get();
+        return DB::table('dosen')->get();
     }
 
 
@@ -26,7 +26,7 @@ class DosenController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name'             => 'required',
+            'name'              => 'required',
             'nip'               => 'required',
         ]);
 
