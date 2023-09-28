@@ -4,7 +4,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HariController\HariController;
-
+// use Illuminate\Support\Facades\App;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,8 +33,7 @@ Route::apiResource('kelas', App\Http\Controllers\Kelas\KelasController::class);
 Route::apiResource('ruangan', App\Http\Controllers\Ruangan\RuanganController::class);
 Route::apiResource('jam', App\Http\Controllers\Jam\JamController::class);
 Route::apiResource('hari', App\Http\Controllers\Hari\HariController::class);
-Route::apiResource('matkul', App\Http\Controllers\Matkul\MatkulController::class);
-
+Route::apiResource('matakuliah', App\Http\Controllers\Matakuliah\MatakuliahController::class);
 
 
 
