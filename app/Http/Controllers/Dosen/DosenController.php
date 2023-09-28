@@ -16,7 +16,7 @@ class DosenController extends Controller
      */
     public function index()
     {
-        return DB::table('dosen')->get();
+        return DB::table('dosens')->get();
     }
 
 
@@ -44,21 +44,18 @@ class DosenController extends Controller
      */
     public function show($id)
     {
-        $dosenExist = Dosen::where('id','=',$id)->first();
+        $dosenExist = Dosen::where('id', '=', $id)->first();
 
-        if($dosenExist){
+        if ($dosenExist) {
 
             return [
                 $dosenExist,
             ];
+        }
 
-       }
-
-       return [
-        ' Dosen tidak tersedia',
-       ];
-
-
+        return [
+            ' Dosen tidak tersedia',
+        ];
     }
 
 
@@ -68,8 +65,8 @@ class DosenController extends Controller
      */
     public function update(Request $request, $id)
     {
-       $dosenExist = Dosen::where('id','=',$id)->first();
-       if($dosenExist){
+        $dosenExist = Dosen::where('id', '=', $id)->first();
+        if ($dosenExist) {
             $dosenExist->update([
                 'name' => $request->name ?? $dosenExist->name,
                 'nip'  => $request->nip ?? $dosenExist->nip,
@@ -78,13 +75,11 @@ class DosenController extends Controller
                 'success update',
                 $dosenExist,
             ];
+        }
 
-       }
-
-       return [
-        ' Dosen tidak tersedia',
-       ];
-
+        return [
+            ' Dosen tidak tersedia',
+        ];
     }
 
     /**
@@ -92,19 +87,16 @@ class DosenController extends Controller
      */
     public function destroy($id)
     {
-        $dosenExist = Dosen::where('id','=',$id)->first();
+        $dosenExist = Dosen::where('id', '=', $id)->first();
 
-        if($dosenExist){
-           $dosenExist->delete();
+        if ($dosenExist) {
+            $dosenExist->delete();
             return [
                 'Deleted Dosen',
             ];
-
         }
         return [
             ' Dosen tidak tersedia',
         ];
-
-
     }
 }

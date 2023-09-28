@@ -12,9 +12,11 @@ class Dosen extends Model
     protected $table = 'dosens';
     protected $fillable = [
         'name',
-       'nip'
+        'nip'
     ];
 
-
-
+    public function pengampu()
+    {
+        return $this->hasMany(pengampu::class, 'dosen_id');
+    }
 }

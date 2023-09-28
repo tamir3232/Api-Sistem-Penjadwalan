@@ -1,9 +1,11 @@
 <?php
 
-
+use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Dosen\DosenController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HariController\HariController;
+use App\Http\Controllers\Kelas\KelasController;
 // use Illuminate\Support\Facades\App;
 
 /*
@@ -24,7 +26,7 @@ use App\Http\Controllers\HariController\HariController;
 //     return $request->user();
 // });
 
-Route::post('register', [App\Http\Controllers\Auth\AuthController::class, 'register']);
+Route::post('register', [AuthController::class, 'register']);
 
 Route::post('login', [App\Http\Controllers\Auth\AuthController::class, 'login']);
 
@@ -34,8 +36,7 @@ Route::apiResource('ruangan', App\Http\Controllers\Ruangan\RuanganController::cl
 Route::apiResource('jam', App\Http\Controllers\Jam\JamController::class);
 Route::apiResource('hari', App\Http\Controllers\Hari\HariController::class);
 Route::apiResource('matakuliah', App\Http\Controllers\Matakuliah\MatakuliahController::class);
-
-
+Route::apiResource('pengampu', App\Http\Controllers\Pengampu\PengampuControllers::class);
 
 
 

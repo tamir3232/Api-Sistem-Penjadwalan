@@ -14,7 +14,7 @@ class KelasController extends Controller
      */
     public function index()
     {
-        return DB::table ('kelas')->all();
+        return DB::table('kelas')->get();
     }
 
 
@@ -45,15 +45,14 @@ class KelasController extends Controller
      */
     public function show($id)
     {
-        $kelasexist = Kelas::where('id','=',$id)->first();
-        if($kelasexist){
-            return[
+        $kelasexist = Kelas::where('id', '=', $id)->first();
+        if ($kelasexist) {
+            return [
                 $kelasexist,
             ];
-    }
+        }
 
-        return['Kelas tidak ditemukan'];
-
+        return ['Kelas tidak ditemukan'];
     }
 
 
@@ -61,19 +60,17 @@ class KelasController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request,$id)
+    public function update(Request $request, $id)
     {
-        $kelasexist = Kelas::where('id' ,'=',$id)->first();
-        if ($kelasexist)
-        {
+        $kelasexist = Kelas::where('id', '=', $id)->first();
+        if ($kelasexist) {
             $kelasexist->update([
-                'nama'=> $request->nama ?? $kelasexist->name,
+                'nama' => $request->nama ?? $kelasexist->name,
                 'semester' => $request->semester ?? $kelasexist->semester,
             ]);
         }
 
         return ['Kelas tidak ditemukan'];
-
     }
 
 
@@ -83,9 +80,8 @@ class KelasController extends Controller
      */
     public function destroy(string $id)
     {
-        $kelasexist = Kelas::where('id','=',$id)->first();
-        if ($kelasexist)
-        {
+        $kelasexist = Kelas::where('id', '=', $id)->first();
+        if ($kelasexist) {
             $kelasexist->delete();
             return ['kelas di hapus'];
         }

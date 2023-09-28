@@ -14,7 +14,7 @@ class MatakuliahController extends Controller
      */
     public function index()
     {
-        return DB::table('matakuliah')-> all();
+        return DB::table('matakuliah')->get();
     }
 
     /**
@@ -31,15 +31,14 @@ class MatakuliahController extends Controller
             'status' => 'required'
         ]);
         $add = Matakuliah::create([
-            'nama' => $request -> nama,
-            'kode_matkul' => $request -> kode_matkul,
-            'semester' => $request -> semester,
-            'sks' => $request -> sks,
-            'status' => $request -> status
+            'nama' => $request->nama,
+            'kode_matkul' => $request->kode_matkul,
+            'semester' => $request->semester,
+            'sks' => $request->sks,
+            'status' => $request->status
 
         ]);
         return $add;
-
     }
 
     /**
@@ -47,8 +46,8 @@ class MatakuliahController extends Controller
      */
     public function show(string $id)
     {
-        $matkulExist = Matakuliah::where('id','=',$id)->first();
-        if($matkulExist){
+        $matkulExist = Matakuliah::where('id', '=', $id)->first();
+        if ($matkulExist) {
             return [$matkulExist];
         }
         return ['Matakuliah tidak ditemukan'];
@@ -60,23 +59,21 @@ class MatakuliahController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $matkulExist = Matakuliah::where('id','=',$id)-> first();
+        $matkulExist = Matakuliah::where('id', '=', $id)->first();
 
-        if ($matkulExist){
-            $matkulExist-> update ([
-                'nama' => $request -> nama ?? $matkulExist -> nama,
-                'kode_matkul'=> $request -> kode_matkul ?? $matkulExist -> kode_matkul,
-                'sks'=> $request -> sks ?? $matkulExist -> sks,
-                'semester'=> $request -> semester ?? $matkulExist -> semester,
-                'status'=> $request -> status ?? $matkulExist -> status,
+        if ($matkulExist) {
+            $matkulExist->update([
+                'nama' => $request->nama ?? $matkulExist->nama,
+                'kode_matkul' => $request->kode_matkul ?? $matkulExist->kode_matkul,
+                'sks' => $request->sks ?? $matkulExist->sks,
+                'semester' => $request->semester ?? $matkulExist->semester,
+                'status' => $request->status ?? $matkulExist->status,
             ]);
             return [
-                'success update ',$matkulExist
+                'success update ', $matkulExist
             ];
         }
         return ['Update gagal'];
-
-
     }
 
     /**
@@ -84,12 +81,11 @@ class MatakuliahController extends Controller
      */
     public function destroy(string $id)
     {
-        $matkulExist = Matakuliah::where('id','=',$id)->first();
-        $matkulExist -> delete();
-            return[
-             'Matakuliah berhasil dihapus'
-            ];
+        $matkulExist = Matakuliah::where('id', '=', $id)->first();
+        $matkulExist->delete();
+        return [
+            'Matakuliah berhasil dihapus'
+        ];
         return ['Matakuliah tidak ditemukan'];
-
     }
 }

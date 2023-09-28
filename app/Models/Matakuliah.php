@@ -19,4 +19,9 @@ class Matakuliah extends Model
         'sks',
         'status',
     ];
+
+    public function pengampu()
+    {
+        return $this->hasMany(pengampu::class, 'matakuliah_id');
+    }
 }

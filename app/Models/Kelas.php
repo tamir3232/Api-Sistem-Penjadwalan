@@ -16,4 +16,9 @@ class Kelas extends Model
         'semester'
 
     ];
+
+    public function pengampu()
+    {
+        return $this->hasMany(pengampu::class, 'kelas_id');
+    }
 }

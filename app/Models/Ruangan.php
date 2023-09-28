@@ -13,4 +13,6 @@ class Ruangan extends Model
     protected $fillable = [
         'nama',
     ];
+
+    
 }
