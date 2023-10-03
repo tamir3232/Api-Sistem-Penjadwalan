@@ -37,6 +37,9 @@ Route::apiResource('jam', App\Http\Controllers\Jam\JamController::class);
 Route::apiResource('hari', App\Http\Controllers\Hari\HariController::class);
 Route::apiResource('matakuliah', App\Http\Controllers\Matakuliah\MatakuliahController::class);
 Route::apiResource('pengampu', App\Http\Controllers\Pengampu\PengampuControllers::class);
+Route::apiResource('reservasi', App\Http\Controllers\Reservasi\ReservasiController::class);
+Route::apiResource('jadwal', App\Http\Controllers\Jadwal\JadwalController::class);
+Route::apiResource('contraint', App\Http\Controllers\Contraint\ContraintController::class);
 
 
 

@@ -17,29 +17,19 @@ class PengampuControllers extends Controller
     public function index()
     {
         $pengampu = DB::table('pengampu')->get();
-
-
-        // return PengampuResource::collection($pengampu);
+        return PengampuResource::collection($pengampu);
         return $pengampu;
         // new PengampuResource() untuk nampilin 1 data
     }
 
     public function show(string $id)
     {
-        $pengampu = pengampu::where('id', '=', $id)->first();
+           $pengampu = pengampu::where('id', '=', $id)->first();
         if ($pengampu) {
             return new PengampuResource($pengampu);
         }
 
         return ['Pengampu tidak ada'];
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -49,7 +39,7 @@ class PengampuControllers extends Controller
     {
         $request->validate([
             'dosen_id'              => 'required',
-            'matakuliah_id'               => 'required',
+            'matakuliah_id'         => 'required',
             'kelas_id'              => 'required'
         ]);
 
@@ -64,32 +54,35 @@ class PengampuControllers extends Controller
         return $add;
     }
 
-    /**
-     * Display the specified resource.
-     */
-
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request,$id)
     {
-        //
+        $pengampuexist = Pengampu::where('id',$id)->first();
+        if($pengampuexist=$id)
+        {
+            $pengampuexist->update([
+            'dosen_id' => $request->dosen_id ?? $pengampuexist ->  dosen_id,
+            'matakuliah_id'  => $request->matakuliah_id ?? $pengampuexist -> matakuliah_id,
+            'kelas_id'  => $request->kelas_id ?? $pengampuexist -> kelas_id]);
+            return ['Pengampu berhasil di update'];
+        }
+        return ['Pengampu tidak ditemukan'];
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        $pengampuexist = Pengampu::where('id','=',$id)->first();
+        if ($pengampuexist)
+        {
+            $pengampuexist->delete();
+            return ['Pengampu berhasil dihapus'];
+        }
+            return ['Pengampu tidak ditemukan'];
     }
 }

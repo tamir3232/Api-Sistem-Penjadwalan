@@ -2,6 +2,9 @@
 
 namespace App\Http\Resources\Pengampu;
 
+use App\Http\Resources\Dosen\DosenResource;
+use App\Http\Resources\Kelas\KelasResource;
+use App\Http\Resources\Matakuliah\MatakuliahResources;
 use App\Models\Dosen;
 use App\Models\Kelas;
 use App\Models\Matakuliah;
@@ -23,11 +26,10 @@ class PengampuResource extends JsonResource
         $kelas = Kelas::where('id', $this->kelas_id)->first();
 
         return [
-            // 'id' => $this->id,
-            // 'dosen' => $dosen,
-            // 'matakuliah' => $matkul,
-            // 'kelas' => $kelas,
-            // 'id_matkul' => $this->matakuliah_id,
-        ];
+             'id' => $this->id,
+             'dosen' => new DosenResource($dosen),
+            'matakuliah' => new MatakuliahResources($matkul),
+            'kelas' => new KelasResource($kelas),
+            ];
     }
 }
