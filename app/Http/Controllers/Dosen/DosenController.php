@@ -16,7 +16,9 @@ class DosenController extends Controller
      */
     public function index()
     {
-        return DB::table('dosens')->get();
+        $dosen = DB::table('dosens')->get();
+
+        return $dosen;
     }
 
 

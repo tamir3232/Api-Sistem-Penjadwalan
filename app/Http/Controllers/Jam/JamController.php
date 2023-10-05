@@ -14,7 +14,7 @@ class JamController extends Controller
      */
     public function index()
     {
-        return DB::table('jam')->all();
+        return DB::table('jam')->get();
     }
 
 
@@ -55,7 +55,7 @@ class JamController extends Controller
      */
     public function update(Request $request,$id)
     {
-        $jamexist = Jam::where('id','=',$id);
+        $jamexist = Jam::where('id','=',$id)->first();
         if ($jamexist)
         {$jamexist -> update(
         [
@@ -72,12 +72,14 @@ class JamController extends Controller
      */
     public function destroy(string $id)
     {
-        $jamexist = Jam::where('id','=',$id);{
-        if ($jamexist) $jamexist -> delete();
+        $jamexist = Jam::where('id','=',$id)->first();
+        if ($jamexist)
         {
-            return ['Jam sudah di hapus'];
+            $jamexist -> delete();
+            return ['Jam berhasil di hapus'];
         }
+        return['jam tidak ditemukan'];
     }
-    return['jam tidak ditemukan'];
-    }
+
+
 }

@@ -6,6 +6,7 @@ use App\Models\Hari;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Hari\HariResources;
 
 class HariController extends Controller
 {
@@ -14,7 +15,9 @@ class HariController extends Controller
      */
     public function index()
     {
-        return DB::table('hari')->all();
+        $hari = DB::table('hari')->get();
+        return HariResources::collection($hari);
+        return $hari;
     }
 
 

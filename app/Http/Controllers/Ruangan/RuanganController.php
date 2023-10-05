@@ -14,7 +14,7 @@ class RuanganController extends Controller
      */
     public function index()
     {
-        return DB::table('ruangan')->all();
+        return DB::table('ruangan')->get();
     }
 
 
@@ -42,9 +42,9 @@ class RuanganController extends Controller
         $ruanganexist = Ruangan::where('id','=',$id)->first();
          if ($ruanganexist)
             {
-             return [$ruanganexist,];
+             return [$ruanganexist];
         }
-        return ('Ruangan tidak ditemukan');
+        return ['Ruangan tidak ditemukan'];
 
     }
 
@@ -73,7 +73,7 @@ class RuanganController extends Controller
     public function destroy(string $id)
     {
         $ruanganexist = Ruangan::where('id','=',$id)->first();
-        if ($ruanganexist);
+        if ($ruanganexist)
         {$ruanganexist->delete();
             return ['ruangan telah di hapus'];
         }

@@ -14,7 +14,9 @@ class MatakuliahController extends Controller
      */
     public function index()
     {
-        return DB::table('matakuliah')->get();
+        $matakuliah = DB::table('matakuliah')->get();
+
+        return $matakuliah;
     }
 
     /**
@@ -82,10 +84,13 @@ class MatakuliahController extends Controller
     public function destroy(string $id)
     {
         $matkulExist = Matakuliah::where('id', '=', $id)->first();
+        if($matkulExist){
         $matkulExist->delete();
         return [
             'Matakuliah berhasil dihapus'
         ];
+    }
         return ['Matakuliah tidak ditemukan'];
+    
     }
 }

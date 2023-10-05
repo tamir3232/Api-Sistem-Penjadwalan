@@ -30,6 +30,6 @@ class pengampu extends Model
     }
     public function kelas()
     {
-        return $this->hasMany(Dosen::class, 'kelas_id');
+        return $this->hasMany(Kelas::class, 'kelas_id');
     }
 }

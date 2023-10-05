@@ -14,7 +14,8 @@ class KelasController extends Controller
      */
     public function index()
     {
-        return DB::table('kelas')->get();
+        $kelas = DB::table('kelas')->get();
+        return $kelas;
     }
 
 
