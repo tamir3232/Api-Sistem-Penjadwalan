@@ -18,6 +18,7 @@ return new class extends Migration
             $table->uuid('ruangan_id')->nullable();
             $table->uuid('pengampu_id')->nullable();
             $table->uuid('reservasi_id')->nullable();
+            $table->softDeletes();
 
             $table->foreign('hari_id')
                   ->references('id')
