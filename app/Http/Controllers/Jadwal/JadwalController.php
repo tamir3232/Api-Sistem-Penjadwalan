@@ -71,6 +71,7 @@ class JadwalController extends Controller
             'pengampu_id'   =>$request -> pengampu_id ?? $jadwalexist -> pengampu_id,
             'reservasi_id'  =>$request -> reservasi_id ?? $jadwalexist -> reservasi_id
             ]);
+            return[$jadwalexist];
         }
         return['Jadwal tidak ditemukan'];
     }

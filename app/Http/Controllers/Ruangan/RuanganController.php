@@ -6,6 +6,7 @@ use App\Models\Ruangan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Ruangan\RuanganResource;
 
 class RuanganController extends Controller
 {
@@ -14,7 +15,9 @@ class RuanganController extends Controller
      */
     public function index()
     {
-        return DB::table('ruangan')->get();
+        $ruangan = DB::table('ruangan')->get();
+        return RuanganResource::collection($ruangan);
+        return $ruangan;
     }
 
 
@@ -42,9 +45,9 @@ class RuanganController extends Controller
         $ruanganexist = Ruangan::where('id','=',$id)->first();
          if ($ruanganexist)
             {
-             return [$ruanganexist];
-        }
-        return ['Ruangan tidak ditemukan'];
+                return new RuanganResource($ruanganexist);
+            }
+                return ['Ruangan tidak ditemukan'];
 
     }
 
@@ -52,17 +55,16 @@ class RuanganController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, string $id)
     {
         $ruanganexist = Ruangan::where('id','=',$id)->first();
 
-        if ($ruanganexist=$id)
+        if ($ruanganexist)
         {
            $ruanganexist->update([
-            'nama'=> $request -> nama ?? $ruanganexist ->nama
+            'nama'=> $request -> nama ?? $ruanganexist ->nama,
            ]);
-           return ['Ruangan berhasil di update', $ruanganexist,];
-
+           return ['Ruangan berhasil di update', $ruanganexist];
         }
         return ['ruangan tidak ditemukan'];
     }

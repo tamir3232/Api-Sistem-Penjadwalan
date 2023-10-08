@@ -6,6 +6,8 @@ use App\Models\Matakuliah;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Matakuliah\MatakuliahResources;
+use App\Http\Resources\matkul\RuanganResource;
 
 class MatakuliahController extends Controller
 {
@@ -14,9 +16,9 @@ class MatakuliahController extends Controller
      */
     public function index()
     {
-        $matakuliah = DB::table('matakuliah')->get();
-
-        return $matakuliah;
+        $matkul = DB::table('matakuliah')->get();
+        return MatakuliahResources::collection($matkul);
+        return $matkul;
     }
 
     /**
@@ -50,7 +52,7 @@ class MatakuliahController extends Controller
     {
         $matkulExist = Matakuliah::where('id', '=', $id)->first();
         if ($matkulExist) {
-            return [$matkulExist];
+            return new MatakuliahResources($matkulExist);
         }
         return ['Matakuliah tidak ditemukan'];
     }
@@ -71,11 +73,9 @@ class MatakuliahController extends Controller
                 'semester' => $request->semester ?? $matkulExist->semester,
                 'status' => $request->status ?? $matkulExist->status,
             ]);
-            return [
-                'success update ', $matkulExist
-            ];
-        }
-        return ['Update gagal'];
+                return ['success update ', $matkulExist];
+            }
+                return ['Matakuliah tidak ditemukan'];
     }
 
     /**
@@ -86,11 +86,9 @@ class MatakuliahController extends Controller
         $matkulExist = Matakuliah::where('id', '=', $id)->first();
         if($matkulExist){
         $matkulExist->delete();
-        return [
-            'Matakuliah berhasil dihapus'
-        ];
+        return ['Matakuliah berhasil dihapus'];
     }
         return ['Matakuliah tidak ditemukan'];
-    
+
     }
 }
