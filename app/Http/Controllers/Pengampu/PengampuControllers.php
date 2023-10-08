@@ -81,7 +81,7 @@ class PengampuControllers extends Controller
         if ($pengampuexist)
         {
             $pengampuexist->delete();
-            return ['Pengampu berhasil dihapus'];
+            return ['Pengampu berhasil dihapus',];
         }
             return ['Pengampu tidak ditemukan'];
     }

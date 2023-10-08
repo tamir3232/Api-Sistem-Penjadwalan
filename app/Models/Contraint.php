@@ -2,13 +2,17 @@
 
 namespace App\Models;
 
+use App\Models\Jam;
+use App\Models\Hari;
+use App\Models\pengampu;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
 class Contraint extends Model
 {
-    use HasFactory, HasUuids;
+    use HasFactory, HasUuids, SoftDeletes;
     protected $table ='contraint';
     protected $fillable =
     [
@@ -20,15 +24,15 @@ class Contraint extends Model
     ];
     public function pengampu()
     {
-        return $this->hasMany(pengampu::class, 'pengampu_id');
+        return $this->belongsTo(pengampu::class, 'pengampu_id');
     }
     public function hari()
     {
-        return $this->belongsTo(Hari::class, 'hari_id');
+        return $this->hasMany(Hari::class, 'hari_id');
     }
     public function jam()
     {
-        return $this->belongsTo(Jam::class, 'jam_id');
+        return $this->hasMany(Jam::class, 'jam_id');
     }
 
 }

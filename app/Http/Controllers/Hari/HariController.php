@@ -45,7 +45,7 @@ class HariController extends Controller
     {
         $hariexisted = Hari::where('id','=',$id)->first();
         if ($hariexisted){
-            return[$hariexisted];
+            return new HariResources($hariexisted);
 
         };
         return ['Hari tidak di temukan'];

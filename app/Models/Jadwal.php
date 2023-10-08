@@ -2,13 +2,19 @@
 
 namespace App\Models;
 
+use App\Models\Jam;
+use App\Models\Hari;
+use App\Models\Ruangan;
+use App\Models\pengampu;
+use App\Models\Reservasi;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
 class Jadwal extends Model
 {
-    use HasFactory,HasUuids;
+    use HasFactory, HasUuids, SoftDeletes;
 
     protected $table ='jadwal';
     protected $fillable =
@@ -33,11 +39,11 @@ class Jadwal extends Model
     }
     public function pengampu()
     {
-        return $this->hasmany(pengampu::class, 'jam_id');
+        return $this->hasMany(pengampu::class, 'pengampu_id');
     }
     public function reservasi()
     {
-        return $this->hasmany(Reservasi::class, 'reservasi_id');
+        return $this->hasMany(Reservasi::class, 'reservasi_id');
     }
 
 }
