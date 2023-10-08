@@ -72,6 +72,7 @@ class KelasController extends Controller
                 'semester' => $request->semester ?? $kelasexist->semester,
             ]);
             return ['berhasil di update', $kelasexist];
+
         }
 
             return ['Kelas tidak ditemukan'];
