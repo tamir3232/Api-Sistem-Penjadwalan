@@ -66,7 +66,8 @@ class DosenController extends Controller
     public function update(Request $request, $id)
     {
         $dosenExist = Dosen::where('id', '=', $id)->first();
-        if ($dosenExist) {
+        if ($request->name) {
+
             $dosenExist->update([
                 'name' => $request->name ?? $dosenExist->name,
                 'nip'  => $request->nip ?? $dosenExist->nip,
