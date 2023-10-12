@@ -61,7 +61,7 @@ class PengampuControllers extends Controller
     public function update(Request $request,$id)
     {
         $pengampuexist = Pengampu::where('id',$id)->first();
-        if($pengampuexist=$id)
+        if($pengampuexist)
         {
             $pengampuexist->update([
             'dosen_id' => $request->dosen_id ?? $pengampuexist ->  dosen_id,

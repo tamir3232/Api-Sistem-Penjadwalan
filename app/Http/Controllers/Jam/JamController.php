@@ -6,6 +6,7 @@ use App\Models\Jam;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Jam\JamResources;
 
 class JamController extends Controller
 {
@@ -14,7 +15,9 @@ class JamController extends Controller
      */
     public function index()
     {
-        return DB::table('jam')->get();
+        $jam =  DB::table('jam')->get();
+        return JamResources::collection($jam);
+        return $jam;
     }
 
 
@@ -43,7 +46,7 @@ class JamController extends Controller
         $jamexist=Jam::where('id','=',$id)->first();
         if ($jamexist)
             {
-                return [$jamexist,];
+                return new JamResources($jamexist);
             };
         return ['jam tidak tersedia'];
 }
