@@ -17,6 +17,7 @@ return new class extends Migration
             $table->uuid('pengampu_id')->nullable();
             $table->uuid('hari_id')->nullable();
             $table->uuid('jam_id')->nullable();
+            $table->softDeletes();
 
               $table->foreign('pengampu_id')
                     -> references('id')

@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
+use App\Models\Jadwal;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
 class Ruangan extends Model
 {
@@ -13,6 +14,15 @@ class Ruangan extends Model
     protected $fillable = [
         'nama',
     ];
+    public function jadwal()
+    {
+        $this->belongsTo(Jadwal::class,'jadwal_id');
+    }
+    public function reservasi()
+    {
+        $this->hasMany(Reservasi::class,'reservasi_id');
+    }
 
-    
+
+
 }

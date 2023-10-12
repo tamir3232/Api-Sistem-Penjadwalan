@@ -22,8 +22,8 @@ class PengampuResource extends JsonResource
     {
         // return parent::toArray($request);
         $dosen = Dosen::where('id', '=', $this->dosen_id)->first();
-        $matkul = Matakuliah::where('id', $this->matakuliah_id)->first();
-        $kelas = Kelas::where('id', $this->kelas_id)->first();
+        $matkul = Matakuliah::where('id','=', $this->matakuliah_id)->first();
+        $kelas = Kelas::where('id','=', $this->kelas_id)->first();
 
         return [
              'id' => $this->id,

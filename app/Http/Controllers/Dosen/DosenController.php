@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dosen;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Dosen\DosenResource;
 use App\Models\Dosen;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -17,7 +18,7 @@ class DosenController extends Controller
     public function index()
     {
         $dosen = DB::table('dosens')->get();
-
+        return DosenResource::collection($dosen);
         return $dosen;
     }
 
@@ -48,12 +49,12 @@ class DosenController extends Controller
     {
         $dosenExist = Dosen::where('id', '=', $id)->first();
 
-        if ($dosenExist) {
+        if ($dosenExist){
 
-            return [
-                $dosenExist,
-            ];
-        }
+
+                return new DosenResource($dosenExist);
+            };
+
 
         return [
             ' Dosen tidak tersedia',

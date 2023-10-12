@@ -26,6 +26,7 @@ class ContraintResource extends JsonResource
         $jam  = Jam::where('id','=',$this->jam_id)->first();
 
         return[
+            'id'=> $this->id,
             'pengampu'=>new PengampuResource($pengampu),
             'hari'=> new HariResources($hari),
             'jam' =>new JamResources($jam),

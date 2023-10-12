@@ -60,6 +60,7 @@ class PengampuControllers extends Controller
      */
     public function update(Request $request, $id)
     {
+
         $pengampuexist = Pengampu::where('id', $id)->first();
         if ($pengampuexist) {
             $pengampuexist->update([
@@ -80,7 +81,7 @@ class PengampuControllers extends Controller
         $pengampuexist = Pengampu::where('id', '=', $id)->first();
         if ($pengampuexist) {
             $pengampuexist->delete();
-            return ['Pengampu berhasil dihapus'];
+            return ['Pengampu berhasil dihapus',];
         }
         return ['Pengampu tidak ditemukan'];
     }
