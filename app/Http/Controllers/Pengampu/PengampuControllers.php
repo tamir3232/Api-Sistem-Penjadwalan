@@ -24,7 +24,7 @@ class PengampuControllers extends Controller
 
     public function show(string $id)
     {
-           $pengampu = pengampu::where('id', '=', $id)->first();
+        $pengampu = pengampu::where('id', '=', $id)->first();
         if ($pengampu) {
             return new PengampuResource($pengampu);
         }
@@ -58,15 +58,15 @@ class PengampuControllers extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request,$id)
+    public function update(Request $request, $id)
     {
-        $pengampuexist = Pengampu::where('id',$id)->first();
-        if($pengampuexist=$id)
-        {
+        $pengampuexist = Pengampu::where('id', $id)->first();
+        if ($pengampuexist) {
             $pengampuexist->update([
-            'dosen_id' => $request->dosen_id ?? $pengampuexist ->  dosen_id,
-            'matakuliah_id'  => $request->matakuliah_id ?? $pengampuexist -> matakuliah_id,
-            'kelas_id'  => $request->kelas_id ?? $pengampuexist -> kelas_id]);
+                'dosen_id' => $request->dosen_id ?? $pengampuexist->dosen_id,
+                'matakuliah_id'  => $request->matakuliah_id ?? $pengampuexist->matakuliah_id,
+                'kelas_id'  => $request->kelas_id ?? $pengampuexist->kelas_id
+            ]);
             return ['Pengampu berhasil di update'];
         }
         return ['Pengampu tidak ditemukan'];
@@ -77,12 +77,11 @@ class PengampuControllers extends Controller
      */
     public function destroy($id)
     {
-        $pengampuexist = Pengampu::where('id','=',$id)->first();
-        if ($pengampuexist)
-        {
+        $pengampuexist = Pengampu::where('id', '=', $id)->first();
+        if ($pengampuexist) {
             $pengampuexist->delete();
             return ['Pengampu berhasil dihapus'];
         }
-            return ['Pengampu tidak ditemukan'];
+        return ['Pengampu tidak ditemukan'];
     }
 }
