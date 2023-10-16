@@ -44,6 +44,6 @@ Route::apiResource('contraint', App\Http\Controllers\Contraint\ContraintControll
 
 
 Route::middleware(['auth:api'])->group(function () {
-
+    Route::post('confirm-reservasi', [App\Http\Controllers\Reservasi\ConfirmReservasiController::class, 'confirm']);
     Route::post('logout', [App\Http\Controllers\Auth\AuthController::class, 'logout']);
 });
