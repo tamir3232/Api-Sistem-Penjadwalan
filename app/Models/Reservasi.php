@@ -15,13 +15,14 @@ class Reservasi extends Model
 {
     use HasFactory, HasUuids, SoftDeletes;
 
-    protected $table ='reservasi';
+    protected $table = 'reservasi';
     protected $fillable =
     [
         'hari_id',
         'jam_id',
         'ruangan_id',
         'pengampu_id',
+        'status',
     ];
     public function hari()
     {
@@ -41,6 +42,6 @@ class Reservasi extends Model
     }
     public function jadwal()
     {
-        return $this->belongsTo(Jadwal::class,'jadwal_id');
+        return $this->belongsTo(Jadwal::class, 'jadwal_id');
     }
 }

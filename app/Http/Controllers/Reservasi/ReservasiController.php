@@ -18,7 +18,6 @@ class ReservasiController extends Controller
         $reservasi = DB::table('reservasi')->get();
         return ReservasiResource::collection($reservasi);
         return $reservasi;
-
     }
 
 
@@ -27,12 +26,11 @@ class ReservasiController extends Controller
      */
     public function show(string $id)
     {
-        $reservasiexist = Reservasi::where('id',$id)->first();
-        if ($reservasiexist)
-        {
+        $reservasiexist = Reservasi::where('id', $id)->first();
+        if ($reservasiexist) {
             return new ReservasiResource($reservasiexist);
-         }
-         return ['Reservasi tidak ditemukan'];
+        }
+        return ['Reservasi tidak ditemukan'];
     }
 
 
@@ -43,7 +41,7 @@ class ReservasiController extends Controller
      */
     public function store(Request $request)
     {
-        $request -> validate([
+        $request->validate([
             'hari_id' => 'required',
             'jam_id' => 'required',
             'ruangan_id' => 'required',
@@ -52,14 +50,14 @@ class ReservasiController extends Controller
 
 
         $add = Reservasi::create([
-            'hari_id' => $request -> hari_id,
-            'jam_id' => $request -> jam_id,
-            'ruangan_id' => $request -> ruangan_id,
-            'pengampu_id' => $request -> pengampu_id,
+            'hari_id' => $request->hari_id,
+            'jam_id' => $request->jam_id,
+            'ruangan_id' => $request->ruangan_id,
+            'pengampu_id' => $request->pengampu_id,
+            'status' => NULL,
 
         ]);
-    return $add;
-
+        return $add;
     }
 
 
@@ -67,21 +65,20 @@ class ReservasiController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request,$id)
+    public function update(Request $request, $id)
     {
-        $reservasiexist = Reservasi::where('id',$id)->first();
-            if($reservasiexist)
-            {
-                $reservasiexist -> update([
-                'hari_id' => $request -> hari_id ?? $reservasiexist -> hari_id,
-                'jam_id' => $request -> jam_id ?? $reservasiexist -> jam_id,
-                'ruangan_id' => $request -> ruangan_id ?? $reservasiexist -> ruangan_id,
-                'pengampu_id' => $request -> pengampu_id ?? $reservasiexist -> pengampu_id,
+        $reservasiexist = Reservasi::where('id', $id)->first();
+        if ($reservasiexist) {
+            $reservasiexist->update([
+                'hari_id' => $request->hari_id ?? $reservasiexist->hari_id,
+                'jam_id' => $request->jam_id ?? $reservasiexist->jam_id,
+                'ruangan_id' => $request->ruangan_id ?? $reservasiexist->ruangan_id,
+                'pengampu_id' => $request->pengampu_id ?? $reservasiexist->pengampu_id,
+                'status'        => $request->status ?? $reservasiexist->status,
             ]);
-                return ['Pengampu berhasil di update'];
+            return ['Pengampu berhasil di update'];
         }
-                return ['Pengampu tidak ditemukan'];
-
+        return ['Pengampu tidak ditemukan'];
     }
 
     /**
@@ -89,12 +86,11 @@ class ReservasiController extends Controller
      */
     public function destroy($id)
     {
-        $reservasiexist = Reservasi::where('id','=',$id)->first();
-        if($reservasiexist)
-    {
-        $reservasiexist->delete();
-        return['Reservasi berhasil dihapus'];
-    }
-        return['Reservasi tidak ditemukan'];
+        $reservasiexist = Reservasi::where('id', '=', $id)->first();
+        if ($reservasiexist) {
+            $reservasiexist->delete();
+            return ['Reservasi berhasil dihapus'];
+        }
+        return ['Reservasi tidak ditemukan'];
     }
 }
