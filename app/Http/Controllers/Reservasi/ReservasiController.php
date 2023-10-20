@@ -45,7 +45,7 @@ class ReservasiController extends Controller
             'hari_id' => 'required',
             'jam_id' => 'required',
             'ruangan_id' => 'required',
-            'pengampu_id' => 'required'
+            'dosen_id' => 'required'
         ]);
 
 
@@ -53,7 +53,7 @@ class ReservasiController extends Controller
             'hari_id' => $request->hari_id,
             'jam_id' => $request->jam_id,
             'ruangan_id' => $request->ruangan_id,
-            'pengampu_id' => $request->pengampu_id,
+            'dosen_id' => $request->dosen_id,
             'status' => NULL,
 
         ]);
@@ -73,7 +73,7 @@ class ReservasiController extends Controller
                 'hari_id' => $request->hari_id ?? $reservasiexist->hari_id,
                 'jam_id' => $request->jam_id ?? $reservasiexist->jam_id,
                 'ruangan_id' => $request->ruangan_id ?? $reservasiexist->ruangan_id,
-                'pengampu_id' => $request->pengampu_id ?? $reservasiexist->pengampu_id,
+                'dosen_id' => $request->dosen_id ?? $reservasiexist->dosen_id,
                 'status'        => $request->status ?? $reservasiexist->status,
             ]);
             return ['Pengampu berhasil di update'];

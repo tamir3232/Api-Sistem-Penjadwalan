@@ -20,7 +20,7 @@ return new class extends Migration
             $table->softDeletes();
 
             $table->foreign('hari_id')
-                ->references('id')
+                ->references('id')  
                 ->on('hari')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');

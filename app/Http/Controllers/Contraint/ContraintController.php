@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Contraint;
 
+use App\Models\Contraint;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\Contraint\ContraintResource;
 use App\Http\Resources\Reservasi\ReservasiResource;
-use App\Models\Contraint;
 
 class ContraintController extends Controller
 {
@@ -16,9 +17,13 @@ class ContraintController extends Controller
      */
     public function index()
     {
+        if (Auth::user()->role == 1)
+        {
         $contraint = DB::table('contraint')->get();
         return ContraintResource::collection($contraint);
         return $contraint;
+        }
+        return['Anda tidak memiliki akses'];
     }
 
 
@@ -26,19 +31,22 @@ class ContraintController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        $request -> validate(
-            ['pengampu_id' => 'required',
-        'hari_id' => 'required',
-        'jam_id' => 'required'
-        ]);
+    {   if (Auth::user()->role == 1)
+        {
+            $request -> validate(
+                ['pengampu_id' => 'required',
+            'hari_id' => 'required',
+            'jam_id' => 'required'
+            ]);
 
-        $add = Contraint::create(
-            ['pengampu_id' => $request -> pengampu_id,
-        'hari_id' => $request -> hari_id,
-        'jam_id' => $request -> jam_id
-        ]);
-        return $add;
+            $add = Contraint::create(
+                ['pengampu_id' => $request -> pengampu_id,
+            'hari_id' => $request -> hari_id,
+            'jam_id' => $request -> jam_id
+            ]);
+            return $add;
+        }
+        return['Anda tidak memiliki akses'];
     }
 
     /**
@@ -46,13 +54,16 @@ class ContraintController extends Controller
      */
     public function show($id)
     {
-        $contraintexist = Contraint::where('id','=',$id)->first();
-            if ($contraintexist)
-            {
-            return new ContraintResource($contraintexist) ;
+        if (Auth::user()->role == 1)
+        {
+            $contraintexist = Contraint::where('id','=',$id)->first();
+                if ($contraintexist)
+                {
+                return new ContraintResource($contraintexist) ;
+            }
+            return['Contraint tidak ada'];
         }
-        return['Contraint tidak ada'];
-
+        return['Anda tidak memiliki akses'];
     }
 
 
@@ -62,18 +73,21 @@ class ContraintController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $contraintexist = Contraint::where('id',$id)->first();
-            if($contraintexist)
-            {
-                $contraintexist -> update([
-                'pengampu_id' => $request -> pengampu_id ?? $contraintexist -> pengampu_id,
-                'hari_id' => $request -> hari_id ?? $contraintexist -> hari_id,
-                'jam_id' => $request -> jam_id ?? $contraintexist -> jam_id
-                ]);
-                return ['contraint berhasil di update'];
-            }
-            return ['Contraint tidak ada'];
-
+        if (Auth::user()->role == 1)
+        {
+            $contraintexist = Contraint::where('id',$id)->first();
+                if($contraintexist)
+                {
+                    $contraintexist -> update([
+                    'pengampu_id' => $request -> pengampu_id ?? $contraintexist -> pengampu_id,
+                    'hari_id' => $request -> hari_id ?? $contraintexist -> hari_id,
+                    'jam_id' => $request -> jam_id ?? $contraintexist -> jam_id
+                    ]);
+                    return ['contraint berhasil di update'];
+                }
+                return ['Contraint tidak ada'];
+        }
+        return['Anda tidak memiliki akses'];
     }
 
     /**
@@ -81,12 +95,16 @@ class ContraintController extends Controller
      */
     public function destroy( $id)
     {
-        $contraintexist = Contraint::where('id',$id)->first();
-        if($contraintexist)
+        if (Auth::user()->role == 1)
         {
-            $contraintexist -> delete();
-            return['Contraint berhasil dihapus'];
+            $contraintexist = Contraint::where('id',$id)->first();
+            if($contraintexist)
+            {
+                $contraintexist -> delete();
+                return['Contraint berhasil dihapus'];
+            }
+            return['contraint tidak ditemukan'];
         }
-        return['contraint tidak ditemukan'];
+        return['Anda tidak memiliki akses'];
     }
 }
