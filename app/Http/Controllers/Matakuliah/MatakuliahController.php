@@ -6,8 +6,9 @@ use App\Models\Matakuliah;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Matakuliah\MatakuliahResources;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\matkul\RuanganResource;
+use App\Http\Resources\Matakuliah\MatakuliahResources;
 
 class MatakuliahController extends Controller
 {
@@ -16,9 +17,13 @@ class MatakuliahController extends Controller
      */
     public function index()
     {
-        $matkul = DB::table('matakuliah')->get();
-        return MatakuliahResources::collection($matkul);
-        return $matkul;
+        if (Auth::user()->role == 1)
+        {
+            $matkul = DB::table('matakuliah')->get();
+            return MatakuliahResources::collection($matkul);
+            return $matkul;
+        }
+        return['Anda tidak memiliki akses'];
     }
 
     /**
@@ -26,23 +31,27 @@ class MatakuliahController extends Controller
      */
     public function store(Request $request)
     {
+        if (Auth::user()->role == 1)
+        {
 
-        $request->validate([
-            'nama' => 'required',
-            'kode_matkul' => 'required',
-            'semester' => 'required',
-            'sks' => 'required',
-            'status' => 'required'
-        ]);
-        $add = Matakuliah::create([
-            'nama' => $request->nama,
-            'kode_matkul' => $request->kode_matkul,
-            'semester' => $request->semester,
-            'sks' => $request->sks,
-            'status' => $request->status
+            $request->validate([
+                'nama' => 'required',
+                'kode_matkul' => 'required',
+                'semester' => 'required',
+                'sks' => 'required',
+                'status' => 'required'
+            ]);
+            $add = Matakuliah::create([
+                'nama' => $request->nama,
+                'kode_matkul' => $request->kode_matkul,
+                'semester' => $request->semester,
+                'sks' => $request->sks,
+                'status' => $request->status
 
-        ]);
-        return $add;
+            ]);
+            return $add;
+        }
+        return['Anda tidak memiliki akses'];
     }
 
     /**
@@ -50,11 +59,15 @@ class MatakuliahController extends Controller
      */
     public function show(string $id)
     {
-        $matkulExist = Matakuliah::where('id', '=', $id)->first();
-        if ($matkulExist) {
-            return new MatakuliahResources($matkulExist);
+        if (Auth::user()->role == 1)
+        {
+            $matkulExist = Matakuliah::where('id', '=', $id)->first();
+            if ($matkulExist) {
+                return new MatakuliahResources($matkulExist);
+            }
+            return ['Matakuliah tidak ditemukan'];
         }
-        return ['Matakuliah tidak ditemukan'];
+        return['Anda tidak memiliki akses'];
     }
 
 
@@ -63,19 +76,22 @@ class MatakuliahController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $matkulExist = Matakuliah::where('id', '=', $id)->first();
-
-        if ($matkulExist) {
-            $matkulExist->update([
-                'nama' => $request->nama ?? $matkulExist->nama,
-                'kode_matkul' => $request->kode_matkul ?? $matkulExist->kode_matkul,
-                'sks' => $request->sks ?? $matkulExist->sks,
-                'semester' => $request->semester ?? $matkulExist->semester,
-                'status' => $request->status ?? $matkulExist->status,
-            ]);
-                return ['success update ', $matkulExist];
-            }
-                return ['Matakuliah tidak ditemukan'];
+        if (Auth::user()->role == 1)
+        {
+            $matkulExist = Matakuliah::where('id', '=', $id)->first();
+            if ($matkulExist) {
+                $matkulExist->update([
+                    'nama' => $request->nama ?? $matkulExist->nama,
+                    'kode_matkul' => $request->kode_matkul ?? $matkulExist->kode_matkul,
+                    'sks' => $request->sks ?? $matkulExist->sks,
+                    'semester' => $request->semester ?? $matkulExist->semester,
+                    'status' => $request->status ?? $matkulExist->status,
+                ]);
+                    return ['success update ', $matkulExist];
+                }
+                    return ['Matakuliah tidak ditemukan'];
+        }
+        return['Anda tidak memiliki akses'];
     }
 
     /**
@@ -83,12 +99,15 @@ class MatakuliahController extends Controller
      */
     public function destroy(string $id)
     {
-        $matkulExist = Matakuliah::where('id', '=', $id)->first();
-        if($matkulExist){
-        $matkulExist->delete();
-        return ['Matakuliah berhasil dihapus'];
-    }
-        return ['Matakuliah tidak ditemukan'];
-
+        if (Auth::user()->role == 1)
+        {
+            $matkulExist = Matakuliah::where('id', '=', $id)->first();
+            if($matkulExist){
+            $matkulExist->delete();
+            return ['Matakuliah berhasil dihapus'];
+            }
+            return ['Matakuliah tidak ditemukan'];
+        }
+        return['Anda tidak memiliki akses'];
     }
 }

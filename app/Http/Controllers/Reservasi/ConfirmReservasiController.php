@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Reservasi;
 
 use App\Http\Controllers\Controller;
-use App\Models\pengampu;
 use App\Models\Reservasi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Dosen;
 
-use App\Http\Controllers\Controller;
-use App\Http\Resources\Dosen\DosenResource;
 use App\Models\Dosen;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\Dosen\DosenResource;
 
 
 
@@ -17,9 +18,13 @@ class DosenController extends Controller
      */
     public function index()
     {
-        $dosen = DB::table('dosens')->get();
-        return DosenResource::collection($dosen);
-        return $dosen;
+        if (Auth::user()->role == 1)
+        {
+            $dosen = DB::table('dosens')->get();
+            return DosenResource::collection($dosen);
+            return $dosen;
+        }
+        return['Anda tidak memiliki akses'];
     }
 
 
@@ -28,18 +33,23 @@ class DosenController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name'              => 'required',
-            'nip'               => 'required',
-        ]);
+        if (Auth::user()->role == 1)
+       {
+            $request->validate([
+                'name'              => 'required',
+                'nip'               => 'required',
+            ]);
 
-        // ini cara add
-        $add = Dosen::create([
-            'name' => $request->name,
-            'nip'  => $request->nip,
-        ]);
+            // ini cara add
+            $add = Dosen::create([
+                'name' => $request->name,
+                'nip'  => $request->nip,
 
-        return $add;
+            ]);
+
+            return $add;
+       }
+       return['Anda tidak memiliki akses'];
     }
 
     /**
@@ -47,18 +57,16 @@ class DosenController extends Controller
      */
     public function show($id)
     {
-        $dosenExist = Dosen::where('id', '=', $id)->first();
+        if (Auth::user()->role == 1)
+        {
+            $dosenExist = Dosen::where('id', '=', $id)->first();
 
-        if ($dosenExist){
-
-
-                return new DosenResource($dosenExist);
-            };
-
-
-        return [
-            ' Dosen tidak tersedia',
-        ];
+            if ($dosenExist){
+                    return new DosenResource($dosenExist);
+                };
+            return['Dosen tidak tersedia',];
+        }
+        return['Anda tidak memiliki akses',];
     }
 
 
@@ -68,22 +76,21 @@ class DosenController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $dosenExist = Dosen::where('id', '=', $id)->first();
-        if ($request->name) {
 
-            $dosenExist->update([
+        if (Auth::user()->role == 1)
+        {
+            $dosenExist = Dosen::where('id', '=', $id)->first();
+            if ($dosenExist)
+            {
+                $dosenExist->update([
                 'name' => $request->name ?? $dosenExist->name,
                 'nip'  => $request->nip ?? $dosenExist->nip,
-            ]);
-            return [
-                'success update',
-                $dosenExist,
-            ];
+                ]);
+                return['success update',$dosenExist,];
+            }
+            return['Dosen tidak tersedia',];
         }
-
-        return [
-            ' Dosen tidak tersedia',
-        ];
+        return['Anda tidak mempunyai akses'];
     }
 
     /**
@@ -91,16 +98,15 @@ class DosenController extends Controller
      */
     public function destroy($id)
     {
-        $dosenExist = Dosen::where('id', '=', $id)->first();
-
-        if ($dosenExist) {
-            $dosenExist->delete();
-            return [
-                'Deleted Dosen',
-            ];
+        if (Auth::user()->role == 1)
+        {
+            $dosenExist = Dosen::where('id', '=', $id)->first();
+            if ($dosenExist) {
+                $dosenExist->delete();
+                return ['Dosen berhasil di hapus',];
+            }
+            return ['Dosen tidak tersedia',];
         }
-        return [
-            ' Dosen tidak tersedia',
-        ];
+        return ['Anda tidak memiliki akses',];
     }
 }

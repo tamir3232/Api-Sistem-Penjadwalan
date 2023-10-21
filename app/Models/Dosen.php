@@ -20,4 +20,8 @@ class Dosen extends Model
     {
         return $this->hasMany(pengampu::class, 'dosen_id');
     }
+    public function reservasi()
+    {
+        return $this->hasMany(Reservasi::class, 'reservasi_id');
+    }
 }

@@ -46,4 +46,14 @@ Route::apiResource('contraint', App\Http\Controllers\Contraint\ContraintControll
 Route::middleware(['auth:api'])->group(function () {
     Route::post('confirm-reservasi', [App\Http\Controllers\Reservasi\ConfirmReservasiController::class, 'confirm']);
     Route::post('logout', [App\Http\Controllers\Auth\AuthController::class, 'logout']);
+    Route::apiResource('dosen', App\Http\Controllers\Dosen\DosenController::class);
+    Route::apiResource('kelas', App\Http\Controllers\Kelas\KelasController::class);
+    Route::apiResource('ruangan', App\Http\Controllers\Ruangan\RuanganController::class);
+    Route::apiResource('jam', App\Http\Controllers\Jam\JamController::class);
+    Route::apiResource('hari', App\Http\Controllers\Hari\HariController::class);
+    Route::apiResource('matakuliah', App\Http\Controllers\Matakuliah\MatakuliahController::class);
+    Route::apiResource('pengampu', App\Http\Controllers\Pengampu\PengampuControllers::class);
+    Route::apiResource('reservasi', App\Http\Controllers\Reservasi\ReservasiController::class);
+    Route::apiResource('jadwal', App\Http\Controllers\Jadwal\JadwalController::class);
+    Route::apiResource('contraint', App\Http\Controllers\Contraint\ContraintController::class);
 });

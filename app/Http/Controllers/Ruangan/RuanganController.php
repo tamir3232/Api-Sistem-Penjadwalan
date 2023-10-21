@@ -6,6 +6,7 @@ use App\Models\Ruangan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\Ruangan\RuanganResource;
 
 class RuanganController extends Controller
@@ -15,9 +16,13 @@ class RuanganController extends Controller
      */
     public function index()
     {
-        $ruangan = DB::table('ruangan')->get();
-        return RuanganResource::collection($ruangan);
-        return $ruangan;
+        if (Auth::user()->role == 1)
+        {
+            $ruangan = DB::table('ruangan')->get();
+            return RuanganResource::collection($ruangan);
+            return $ruangan;
+        }
+        return['Anda tidak memiliki akses'];
     }
 
 
@@ -25,15 +30,18 @@ class RuanganController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        $request->validate([
-            'nama' => 'required',
-        ]);
+    {   if (Auth::user()->role == 1)
+        {
+            $request->validate([
+                'nama' => 'required',
+            ]);
 
-        $add = Ruangan::create([
-            'nama' => $request -> nama,
-        ]);
-        return $add;
+            $add = Ruangan::create([
+                'nama' => $request -> nama,
+            ]);
+            return $add;
+        }
+        return['Anda tidak memiliki akses'];
 
     }
 
@@ -41,13 +49,16 @@ class RuanganController extends Controller
      * Display the specified resource.
      */
     public function show($id)
-    {
-        $ruanganexist = Ruangan::where('id','=',$id)->first();
-         if ($ruanganexist)
-            {
-                return new RuanganResource($ruanganexist);
-            }
-                return ['Ruangan tidak ditemukan'];
+    {   if (Auth::user()->role == 1)
+        {
+            $ruanganexist = Ruangan::where('id','=',$id)->first();
+            if ($ruanganexist)
+                {
+                    return new RuanganResource($ruanganexist);
+                }
+                    return ['Ruangan tidak ditemukan'];
+        }
+        return['Anda tidak memiliki akses'];
 
     }
 
@@ -57,16 +68,19 @@ class RuanganController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $ruanganexist = Ruangan::where('id','=',$id)->first();
-
-        if ($ruanganexist)
+        if (Auth::user()->role == 1)
         {
-           $ruanganexist->update([
-            'nama'=> $request -> nama ?? $ruanganexist ->nama,
-           ]);
-           return ['Ruangan berhasil di update', $ruanganexist];
+            $ruanganexist = Ruangan::where('id','=',$id)->first();
+            if ($ruanganexist)
+            {
+            $ruanganexist->update([
+                'nama'=> $request -> nama ?? $ruanganexist ->nama,
+            ]);
+            return ['Ruangan berhasil di update', $ruanganexist];
+            }
+            return ['ruangan tidak ditemukan'];
         }
-        return ['ruangan tidak ditemukan'];
+        return['Anda tidak memiliki akses'];
     }
 
     /**
@@ -74,11 +88,15 @@ class RuanganController extends Controller
      */
     public function destroy(string $id)
     {
-        $ruanganexist = Ruangan::where('id','=',$id)->first();
-        if ($ruanganexist)
-        {$ruanganexist->delete();
-            return ['ruangan telah di hapus'];
+        if (Auth::user()->role == 1)
+        {
+            $ruanganexist = Ruangan::where('id','=',$id)->first();
+            if ($ruanganexist)
+            {$ruanganexist->delete();
+                return ['ruangan telah di hapus'];
+            }
+            return ['ruangan tidak di temukan'];
         }
-        return ['ruangan tidak di temukan'];
+        return['Anda tidak memiliki akses'];
     }
 }
