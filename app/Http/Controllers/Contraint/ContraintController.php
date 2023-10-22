@@ -34,13 +34,13 @@ class ContraintController extends Controller
     {   if (Auth::user()->role == 1)
         {
             $request -> validate(
-                ['pengampu_id' => 'required',
-            'hari_id' => 'required',
-            'jam_id' => 'required'
+                ['dosen_id' => 'required',
+                    'hari_id' => 'required',
+                    'jam_id' => 'required'
             ]);
 
             $add = Contraint::create(
-                ['pengampu_id' => $request -> pengampu_id,
+                ['dosen_id' => $request -> dosen_id,
             'hari_id' => $request -> hari_id,
             'jam_id' => $request -> jam_id
             ]);
@@ -79,7 +79,7 @@ class ContraintController extends Controller
                 if($contraintexist)
                 {
                     $contraintexist -> update([
-                    'pengampu_id' => $request -> pengampu_id ?? $contraintexist -> pengampu_id,
+                    'dosen_id' => $request -> dosen_id ?? $contraintexist -> dosen_id,
                     'hari_id' => $request -> hari_id ?? $contraintexist -> hari_id,
                     'jam_id' => $request -> jam_id ?? $contraintexist -> jam_id
                     ]);

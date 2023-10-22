@@ -24,4 +24,8 @@ class Dosen extends Model
     {
         return $this->hasMany(Reservasi::class, 'reservasi_id');
     }
+    public function contraint()
+    {
+        return $this->hasmany(Contraint::class, 'contraint_id');
+    }
 }
