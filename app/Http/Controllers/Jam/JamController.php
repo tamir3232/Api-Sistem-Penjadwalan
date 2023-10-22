@@ -16,13 +16,13 @@ class JamController extends Controller
      */
     public function index()
     {
-        if (Auth::user()->role == 1)
-        {
+        // if (Auth::user()->role == 1)
+        // {
             $jam =  DB::table('jam')->get();
             return JamResources::collection($jam);
             return $jam;
-        }
-        return['Anda tidak memiliki akses'];
+        // }
+        // return['Anda tidak memiliki akses'];
     }
 
 

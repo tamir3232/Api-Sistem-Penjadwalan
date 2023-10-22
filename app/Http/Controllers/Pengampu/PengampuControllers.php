@@ -19,7 +19,7 @@ class PengampuControllers extends Controller
     {
         if (Auth::user()->role == 1)
         {
-            $pengampu = DB::table('pengampu')->get();
+            $pengampu = Pengampu::get();
             return PengampuResource::collection($pengampu);
             return $pengampu;
             // new PengampuResource() untuk nampilin 1 data

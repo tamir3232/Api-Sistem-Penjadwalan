@@ -15,7 +15,7 @@ class ReservasiController extends Controller
      */
     public function index()
     {
-        $reservasi = DB::table('reservasi')->get();
+        $reservasi = Reservasi::get();
         return ReservasiResource::collection($reservasi);
         return $reservasi;
     }
@@ -45,7 +45,7 @@ class ReservasiController extends Controller
             'hari_id' => 'required',
             'jam_id' => 'required',
             'ruangan_id' => 'required',
-            'dosen_id' => 'required'
+            'pengampu_id' => 'required'
         ]);
 
 
@@ -53,7 +53,7 @@ class ReservasiController extends Controller
             'hari_id' => $request->hari_id,
             'jam_id' => $request->jam_id,
             'ruangan_id' => $request->ruangan_id,
-            'dosen_id' => $request->dosen_id,
+            'pengampu_id' => $request->pengampu_id,
             'status' => NULL,
 
         ]);
@@ -70,10 +70,11 @@ class ReservasiController extends Controller
         $reservasiexist = Reservasi::where('id', $id)->first();
         if ($reservasiexist) {
             $reservasiexist->update([
-                'hari_id' => $request->hari_id ?? $reservasiexist->hari_id,
-                'jam_id' => $request->jam_id ?? $reservasiexist->jam_id,
-                'ruangan_id' => $request->ruangan_id ?? $reservasiexist->ruangan_id,
-                'dosen_id' => $request->dosen_id ?? $reservasiexist->dosen_id,
+                'hari_id'       => $request->hari_id ?? $reservasiexist->hari_id,
+                'jam_id'        => $request->jam_id ?? $reservasiexist->jam_id,
+                'ruangan_id'    => $request->ruangan_id ?? $reservasiexist->ruangan_id,
+                // 'dosen_id'   => $request->dosen_id ?? $reservasiexist->dosen_id,
+                'pengampu_id'   => $request->pengampu_id ?? $reservasiexist->pengampu_id,
                 'status'        => $request->status ?? $reservasiexist->status,
             ]);
             return ['Pengampu berhasil di update'];

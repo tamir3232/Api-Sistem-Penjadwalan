@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Models\Jam;
 use App\Models\Hari;
-use App\Models\Dosen;
 use App\Models\Jadwal;
 use App\Models\Ruangan;
 use Illuminate\Database\Eloquent\Model;
@@ -22,7 +21,7 @@ class Reservasi extends Model
         'hari_id',
         'jam_id',
         'ruangan_id',
-        'dosen_id',
+        'pengampu_id',
         'status',
     ];
     public function hari()
@@ -37,9 +36,9 @@ class Reservasi extends Model
     {
         return $this->belongsTo(Ruangan::class, 'ruangan_id');
     }
-    public function dosen()
+    public function pengampu()
     {
-        return $this->belongsTo(Dosen::class, 'dosen_id');
+        return $this->belongsTo(pengampu::class, 'pengampu_id');
     }
     public function jadwal()
     {

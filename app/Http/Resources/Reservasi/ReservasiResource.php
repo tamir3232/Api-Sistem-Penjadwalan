@@ -25,17 +25,18 @@ class ReservasiResource extends JsonResource
     public function toArray(Request $request): array
     {
         // return parent::toArray($request);
-        $jam  = Jam::where('id','=',$this->jam_id)->first();
-        $ruangan  = Ruangan::where('id','=',$this->ruangan_id)->first();
-        $pengampu = Dosen::where('id','=',$this->dosen_id)->first();
-        $hari  = Hari::where('id','=',$this->hari_id)->first();
+        $jam        = Jam::where('id','=',$this->jam_id)->first();
+        $ruangan    = Ruangan::where('id','=',$this->ruangan_id)->first();
+        $pengampu   = pengampu::where('id','=',$this->pengampu_id)->first();
+        $hari       = Hari::where('id','=',$this->hari_id)->first();
 
         return[
             'id'=>$this-> id,
             'hari'=> new HariResources($hari),
             'jam' =>new JamResources($jam),
             'ruangan' =>new RuanganResource($ruangan),
-            'dosens'=>new DosenResource($pengampu),
+            // 'dosens'=>new DosenResource($pengampu),
+            'pengampu' =>new PengampuResource($pengampu),
             'status'=>$this-> status,
 
 

@@ -16,13 +16,13 @@ class RuanganController extends Controller
      */
     public function index()
     {
-        if (Auth::user()->role == 1)
-        {
+        // if (Auth::user()->role == 1)
+        // {
             $ruangan = DB::table('ruangan')->get();
             return RuanganResource::collection($ruangan);
             return $ruangan;
-        }
-        return['Anda tidak memiliki akses'];
+        // }
+        // return['Anda tidak memiliki akses'];
     }
 
 

@@ -16,13 +16,13 @@ class HariController extends Controller
      */
     public function index()
     {
-        if (Auth::user()->role == 1)
-        {
+        // if (Auth::user()->role == 1)
+        // {
             $hari = DB::table('hari')->get();
             return HariResources::collection($hari);
             return $hari;
-        }
-        return['Anda tidak memiliki akses'];
+        // }
+        // return['Anda tidak memiliki akses'];
     }
 
 
