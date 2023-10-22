@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Models\Jam;
 use App\Models\Hari;
-use App\Models\pengampu;
+use App\Models\Dosen;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -17,14 +17,14 @@ class Contraint extends Model
     protected $fillable =
     [
 
-        'pengampu_id',
+        'dosen_id',
         'hari_id',
         'jam_id',
 
     ];
-    public function pengampu()
+    public function dosen()
     {
-        return $this->belongsTo(pengampu::class, 'pengampu_id');
+        return $this->belongsTo(Dosen::class, 'dosen_id');
     }
     public function hari()
     {

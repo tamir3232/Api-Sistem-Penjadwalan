@@ -43,12 +43,12 @@ class pengampu extends Model
     {
         return $this->belongsTo(Jadwal::class, 'jadwal_id');
     }
-    public function reservasi()
-    {
-        return $this->hasMany(Reservasi::class,'reservasi_id');
-    }
-    public function contraint()
-    {
-        return $this->hasMany(Contraint::class, 'contraint_id');
-    }
+    // public function reservasi()
+    // {
+    //     return $this->hasMany(Reservasi::class,'reservasi_id');
+    // }
+    // public function contraint()
+    // {
+    //     return $this->hasMany(Contraint::class, 'contraint_id');
+    // }
 }
