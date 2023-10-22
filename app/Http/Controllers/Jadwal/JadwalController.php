@@ -15,13 +15,13 @@ class JadwalController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {   if (Auth::user()->role == 1)
+    // {   if (Auth::user()->role == 1)
         {
-            $jadwal = DB::table('jadwal')->get();
+            $jadwal = Jadwal::get();
             return JadwalResource::collection($jadwal);
             return $jadwal;
-        }
-        return['Anda tidak memiliki akses'];
+        // }
+        // return['Anda tidak memiliki akses'];
     }
 
     /**

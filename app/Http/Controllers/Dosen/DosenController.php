@@ -18,13 +18,9 @@ class DosenController extends Controller
      */
     public function index()
     {
-        if (Auth::user()->role == 1)
-        {
             $dosen = DB::table('dosens')->get();
             return DosenResource::collection($dosen);
             return $dosen;
-        }
-        return['Anda tidak memiliki akses'];
     }
 
 
@@ -57,16 +53,12 @@ class DosenController extends Controller
      */
     public function show($id)
     {
-        if (Auth::user()->role == 1)
-        {
             $dosenExist = Dosen::where('id', '=', $id)->first();
 
             if ($dosenExist){
                     return new DosenResource($dosenExist);
                 };
             return['Dosen tidak tersedia',];
-        }
-        return['Anda tidak memiliki akses',];
     }
 
 

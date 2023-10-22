@@ -16,10 +16,10 @@ class Dosen extends Model
         'nip'
     ];
 
-    public function pengampu()
-    {
-        return $this->hasMany(pengampu::class, 'dosen_id');
-    }
+    // public function pengampu()
+    // {
+    //     return $this->hasMany(pengampu::class, 'dosen_id');
+    // }
     public function reservasi()
     {
         return $this->hasMany(Reservasi::class, 'reservasi_id');
