@@ -19,7 +19,7 @@ class ContraintController extends Controller
     {
         if (Auth::user()->role == 1)
         {
-        $contraint = DB::table('contraint')->get();
+        $contraint = contraint::get();
         return ContraintResource::collection($contraint);
         return $contraint;
         }
