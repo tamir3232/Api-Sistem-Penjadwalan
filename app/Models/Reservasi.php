@@ -23,6 +23,7 @@ class Reservasi extends Model
         'ruangan_id',
         'pengampu_id',
         'status',
+        
     ];
     public function hari()
     {

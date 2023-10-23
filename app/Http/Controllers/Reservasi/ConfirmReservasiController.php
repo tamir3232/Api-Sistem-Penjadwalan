@@ -23,10 +23,11 @@ class ConfirmReservasiController extends Controller
                     throw new Exception('JADWAL YANG DIINPUTKAN TIDAK TERSEDIA LAGI');
                 } else {
                     $addJadwal = Jadwal::create([
-                        'hari_id' => $Reservasi->hari_id,
-                        'jam_id'  => $Reservasi->jam_id,
+                        'hari_id'       => $Reservasi->hari_id,
+                        'jam_id'        => $Reservasi->jam_id,
                         'ruangan_id' => $Reservasi->ruangan_id,
-                        'pengampu_id' => $Reservasi->pengampu_id
+                        'pengampu_id' => $Reservasi->pengampu_id,
+                        'reservasi_id' => $Reservasi->id,
                     ]);
                 }
             }

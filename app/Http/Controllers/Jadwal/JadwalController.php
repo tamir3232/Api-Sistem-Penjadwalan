@@ -35,14 +35,14 @@ class JadwalController extends Controller
                 'jam_id' => 'required',
                 'ruangan_id' => 'required',
                 'pengampu_id' => 'required',
-                'reservasi_id' => 'required'
+
             ]);
             $add = Jadwal::create([
-                'hari_id' => $request->hari_id,
-                'jam_id' => $request->jam_id,
-                'ruangan_id' => $request->ruangan_id,
-                'pengampu_id' => $request->pengampu_id,
-                'reservasi_id' => $request->reservasi_id
+                'hari_id'       => $request->hari_id,
+                'jam_id'        => $request->jam_id,
+                'ruangan_id'    => $request->ruangan_id,
+                'pengampu_id'   => $request->pengampu_id,
+                'reservasi_id'   => $request->reservasi_id ?? NULL,
             ]);
             return $add;
         }
