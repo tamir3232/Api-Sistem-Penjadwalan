@@ -4,7 +4,7 @@ INSERT INTO
         "dosen_id",
         "matakuliah_id",
         "kelas_id",
-        "deleted_at",
+        "created_at",
         "updated_at"
     )
 VALUES (

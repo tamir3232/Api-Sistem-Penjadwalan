@@ -20,7 +20,7 @@ return new class extends Migration
             $table->softDeletes();
 
             $table->foreign('hari_id')
-                ->references('id')  
+                ->references('id')
                 ->on('hari')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
@@ -37,7 +37,7 @@ return new class extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
 
-                $table->foreign('pengampu_id')
+            $table->foreign('pengampu_id')
                 ->references('id')
                 ->on('pengampu')
                 ->onUpdate('cascade')
@@ -45,7 +45,6 @@ return new class extends Migration
 
             $table->timestamps();
         });
-
     }
     /**
      * Reverse the migrations.
