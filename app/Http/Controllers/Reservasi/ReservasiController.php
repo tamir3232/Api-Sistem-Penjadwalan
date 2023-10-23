@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Reservasi\ReservasiResource;
+use App\Models\Jadwal;
+use Exception;
 
 class ReservasiController extends Controller
 {
@@ -49,6 +51,12 @@ class ReservasiController extends Controller
         ]);
 
 
+        $jadwalExist = Jadwal::where('hari_id', $request->hari_id)->where('jam_id', $request->jam_id)->where('ruangan_id', $request->ruangan_id)->first();
+
+        if ($jadwalExist) {
+            throw new Exception('JADWAL YANG DIINPUTKAN TIDAK TERSEDIA LAGI');
+        }
+
         $add = Reservasi::create([
             'hari_id' => $request->hari_id,
             'jam_id' => $request->jam_id,
@@ -68,6 +76,16 @@ class ReservasiController extends Controller
     public function update(Request $request, $id)
     {
         $reservasiexist = Reservasi::where('id', $id)->first();
+
+        if ($request->status == 'Diterima') {
+
+            $jadwalExist = Jadwal::where('hari_id', $reservasiexist->hari_id)->where('jam_id', $reservasiexist->jam_id)->where('ruangan_id', $reservasiexist->ruangan_id)->first();
+
+            if ($jadwalExist) {
+                throw new Exception('JADWAL YANG DIINPUTKAN TIDAK TERSEDIA LAGI');
+            }
+        }
+
         if ($reservasiexist) {
             $reservasiexist->update([
                 'hari_id'       => $request->hari_id ?? $reservasiexist->hari_id,

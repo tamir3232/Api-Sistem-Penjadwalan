@@ -18,10 +18,10 @@ return new class extends Migration
             $table->uuid('pengampu_id')->nullable();
 
             $table->foreign('pengampu_id')
-                    ->references('id')
-                    ->on('pengampu')
-                    ->onUpdate('cascade')
-                    ->OnDelete('cascade');
+                ->references('id')
+                ->on('pengampu')
+                ->onUpdate('cascade')
+                ->OnDelete('cascade');
         });
     }
 
@@ -31,7 +31,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('reservasi', function (Blueprint $table) {
-            //
+            $table->dropColumn('pengampu_id')->nullable();
         });
     }
 };
