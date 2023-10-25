@@ -17,14 +17,13 @@ class PengampuControllers extends Controller
      */
     public function index()
     {
-        if (Auth::user()->role == 1)
+     
         {
             $pengampu = Pengampu::get();
             return PengampuResource::collection($pengampu);
-            return $pengampu;
-            // new PengampuResource() untuk nampilin 1 data
+       
         }
-        return['Anda tidak memiliki akses'];
+     
     }
 
 
