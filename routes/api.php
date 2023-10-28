@@ -31,7 +31,7 @@ use App\Models\Jadwal;
 // });
 //tidak butuh token
 Route::post('register', [AuthController::class, 'register']);
-Route::get('cek-jadwal',[AllJadwalController::class, 'index']);
+Route::get('cek-jadwal', [AllJadwalController::class, 'index']);
 Route::post('login', [App\Http\Controllers\Auth\AuthController::class, 'login']);
 
 
@@ -40,6 +40,7 @@ Route::post('login', [App\Http\Controllers\Auth\AuthController::class, 'login'])
 Route::middleware(['auth:api'])->group(function () {
     Route::post('confirm-reservasi', [App\Http\Controllers\Reservasi\ConfirmReservasiController::class, 'confirm']);
     Route::post('logout', [App\Http\Controllers\Auth\AuthController::class, 'logout']);
+    Route::post('confirm-user', [App\Http\Controllers\Auth\ConfirmUserController::class, 'confirm']);
     Route::apiResource('dosen', App\Http\Controllers\Dosen\DosenController::class);
     Route::apiResource('kelas', App\Http\Controllers\Kelas\KelasController::class);
     Route::apiResource('ruangan', App\Http\Controllers\Ruangan\RuanganController::class);

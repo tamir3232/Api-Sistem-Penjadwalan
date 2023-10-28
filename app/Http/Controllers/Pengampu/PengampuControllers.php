@@ -17,13 +17,8 @@ class PengampuControllers extends Controller
      */
     public function index()
     {
-     
-        {
-            $pengampu = Pengampu::get();
-            return PengampuResource::collection($pengampu);
-       
-        }
-     
+        $pengampu = Pengampu::get();
+        return PengampuResource::collection($pengampu);
     }
 
 
@@ -32,8 +27,7 @@ class PengampuControllers extends Controller
      */
     public function store(Request $request)
     {
-        if (Auth::user()->role == 1)
-        {
+        if (Auth::user()->role == 1) {
             $request->validate([
                 'dosen_id'              => 'required',
                 'matakuliah_id'         => 'required',
@@ -48,20 +42,19 @@ class PengampuControllers extends Controller
             ]);
             return $add;
         }
-        return['Anda tidak memiliki akses'];
+        return ['Anda tidak memiliki akses'];
     }
 
     public function show(string $id)
     {
-        if (Auth::user()->role == 1)
-        {
+        if (Auth::user()->role == 1) {
             $pengampu = pengampu::where('id', '=', $id)->first();
             if ($pengampu) {
                 return new PengampuResource($pengampu);
             }
             return ['Pengampu tidak ada'];
         }
-        return['Anda tidak memiliki akses'];
+        return ['Anda tidak memiliki akses'];
     }
 
     /**
@@ -69,8 +62,7 @@ class PengampuControllers extends Controller
      */
     public function update(Request $request, $id)
     {
-        if (Auth::user()->role == 1)
-        {
+        if (Auth::user()->role == 1) {
             $pengampuexist = Pengampu::where('id', $id)->first();
             if ($pengampuexist) {
                 $pengampuexist->update([
@@ -82,7 +74,7 @@ class PengampuControllers extends Controller
             }
             return ['Pengampu tidak ditemukan'];
         }
-        return['Anda tidak memiliki akses'];
+        return ['Anda tidak memiliki akses'];
     }
 
     /**
@@ -90,8 +82,7 @@ class PengampuControllers extends Controller
      */
     public function destroy($id)
     {
-        if (Auth::user()->role == 1)
-        {
+        if (Auth::user()->role == 1) {
             $pengampuexist = Pengampu::where('id', '=', $id)->first();
             if ($pengampuexist) {
                 $pengampuexist->delete();
@@ -99,6 +90,6 @@ class PengampuControllers extends Controller
             }
             return ['Pengampu tidak ditemukan'];
         }
-        return['Anda tidak memiliki akses'];
+        return ['Anda tidak memiliki akses'];
     }
 }
