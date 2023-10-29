@@ -8,6 +8,7 @@ use App\Http\Controllers\HariController\HariController;
 use App\Http\Controllers\Jadwal\AllJadwalController;
 use App\Http\Controllers\Jadwal\JadwalController;
 use App\Http\Controllers\Kelas\KelasController;
+use App\Http\Controllers\Reservasi\ReservasiController;
 use App\Models\Jadwal;
 
 // use Illuminate\Support\Facades\App;
@@ -36,6 +37,7 @@ Route::post('login', [App\Http\Controllers\Auth\AuthController::class, 'login'])
 
 
 
+
 //butuh token
 Route::middleware(['auth:api'])->group(function () {
     Route::post('confirm-reservasi', [App\Http\Controllers\Reservasi\ConfirmReservasiController::class, 'confirm']);
@@ -51,4 +53,5 @@ Route::middleware(['auth:api'])->group(function () {
     Route::apiResource('reservasi', App\Http\Controllers\Reservasi\ReservasiController::class);
     Route::apiResource('jadwal', App\Http\Controllers\Jadwal\JadwalController::class);
     Route::apiResource('contraint', App\Http\Controllers\Contraint\ContraintController::class);
+    Route::get('my-reservasi', [ReservasiController::class, 'MyReservasi']);
 });

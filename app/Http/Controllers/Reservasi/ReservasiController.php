@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers\Reservasi;
 
+use Exception;
+use App\Models\User;
+use App\Models\Jadwal;
 use App\Models\Reservasi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\Reservasi\ReservasiResource;
-use App\Models\Jadwal;
-use Exception;
 
 class ReservasiController extends Controller
 {
@@ -18,11 +20,36 @@ class ReservasiController extends Controller
     public function index()
     {
         $reservasi = Reservasi::get();
-        return ReservasiResource::collection($reservasi);
-        return $reservasi;
+        if ($reservasi) {
+            return ReservasiResource::collection($reservasi);
+        }
+        return response()->json(array(
+            'message' => 'reservasi tidak ditemukan',
+            'status' => 'not found',
+            'code' => 500,
+        ));
+        // var_dump($reservasi);
+        // exit;
+
+
+
     }
 
+    public function MyReservasi()
+    {
 
+        $reservasi = Reservasi::where('reservasiby_id',Auth::user()->id)->get();
+        if ($reservasi) {
+            return ReservasiResource::collection($reservasi);
+            }
+            return response()->json(array(
+                'message' => 'reservasi tidak ditemukan',
+                'status' => 'not found',
+                'code' => 500,
+            ));
+
+
+    }
     /**
      * Display the specified resource.
      */
@@ -35,7 +62,7 @@ class ReservasiController extends Controller
         return ['Reservasi tidak ditemukan'];
     }
 
-    
+
 
 
     /**
@@ -43,11 +70,16 @@ class ReservasiController extends Controller
      */
     public function store(Request $request)
     {
+        // $reservasiexist = Reservasi::where('reservasiby_id', $request->resevasiby_id);
+        //  if (Auth::user()-> id ==  $reservasiexist)
+        //  {
         $request->validate([
-            'hari_id' => 'required',
-            'jam_id' => 'required',
-            'ruangan_id' => 'required',
-            'pengampu_id' => 'required'
+            'hari_id'           => 'required',
+            'jam_id'            => 'required',
+            'ruangan_id'        => 'required',
+            'pengampu_id'       => 'required',
+
+
         ]);
 
 
@@ -58,15 +90,20 @@ class ReservasiController extends Controller
         }
 
         $add = Reservasi::create([
-            'hari_id' => $request->hari_id,
-            'jam_id' => $request->jam_id,
-            'ruangan_id' => $request->ruangan_id,
-            'pengampu_id' => $request->pengampu_id,
+            'hari_id'           => $request->hari_id ?? null,
+            'jam_id'            => $request->jam_id ?? null,
+            'ruangan_id'        => $request->ruangan_id ?? null,
+            'pengampu_id'       => $request->pengampu_id ?? null,
+            'tanggal_reservasi' => $request->tanggal_reservasi_id ?? null,
+            'reservasiby_id'    => Auth::user()->id,
             'status' => NULL,
 
         ]);
         return $add;
+        //  }
+        //  return['Anda tidak bisa mengakses'];
     }
+
 
 
 
@@ -88,12 +125,13 @@ class ReservasiController extends Controller
 
         if ($reservasiexist) {
             $reservasiexist->update([
-                'hari_id'       => $request->hari_id ?? $reservasiexist->hari_id,
-                'jam_id'        => $request->jam_id ?? $reservasiexist->jam_id,
-                'ruangan_id'    => $request->ruangan_id ?? $reservasiexist->ruangan_id,
-                // 'dosen_id'   => $request->dosen_id ?? $reservasiexist->dosen_id,
-                'pengampu_id'   => $request->pengampu_id ?? $reservasiexist->pengampu_id,
-                'status'        => $request->status ?? $reservasiexist->status,
+                'hari_id'           => $request->hari_id ?? $reservasiexist->hari_id,
+                'jam_id'            => $request->jam_id ?? $reservasiexist->jam_id,
+                'ruangan_id'        => $request->ruangan_id ?? $reservasiexist->ruangan_id,
+                // 'dosen_id'       => $request->dosen_id ?? $reservasiexist->dosen_id,
+                'pengampu_id'       => $request->pengampu_id ?? $reservasiexist->pengampu_id,
+                'tanggal_reservasi' => $request->tanggal_reservasi ?? $reservasiexist->tanggal_reservasi,
+                // 'status'            => $request->status ?? $reservasiexist->status,
             ]);
             return ['Pengampu berhasil di update'];
         }

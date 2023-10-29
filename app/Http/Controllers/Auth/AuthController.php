@@ -73,7 +73,7 @@ class AuthController extends Controller
             return response(['status' => false, 'message' => 'User Not Found']);
         }
         if (Hash::check($request->password, $user->password)) {
-            if ($user->statu != "Active") {
+            if ($user->status != "Active") {
                 return response(['status' => false, 'message' => 'Akun Tidak Aktif, silahkan menghubungi admin']);
             }
             $token = $user->createToken($user->id)->accessToken;
