@@ -20,7 +20,6 @@ return new class extends Migration
             $table->integer('role')->nullable();
             $table->string('status')->nullable();
             $table->timestamps();
-
         });
     }
 

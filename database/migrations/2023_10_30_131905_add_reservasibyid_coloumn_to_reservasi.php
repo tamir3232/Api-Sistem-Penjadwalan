@@ -12,18 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('reservasi', function (Blueprint $table) {
-            $table->uuid('reservasiby_id');
+            $table->uuid('reservasiby_id')->nullable();
 
 
-        $table->foreign('reservasiby_id')
-            ->references('id')
-            ->on('users')
-            ->onUpdate('cascade')
-            ->onDelete('cascade');
-
-
+            $table->foreign('reservasiby_id')
+                ->references('id')
+                ->on('users')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
         });
-
     }
 
     /**
