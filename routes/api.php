@@ -54,4 +54,5 @@ Route::middleware(['auth:api'])->group(function () {
     Route::apiResource('jadwal', App\Http\Controllers\Jadwal\JadwalController::class);
     Route::apiResource('contraint', App\Http\Controllers\Contraint\ContraintController::class);
     Route::get('my-reservasi', [ReservasiController::class, 'MyReservasi']);
+    Route::get('get-user', [AuthController::class, 'GetUser']);
 });
