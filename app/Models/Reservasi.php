@@ -22,8 +22,9 @@ class Reservasi extends Model
         'jam_id',
         'ruangan_id',
         'pengampu_id',
+        'reservasiby_id',
         'status',
-        
+
     ];
     public function hari()
     {
@@ -44,5 +45,10 @@ class Reservasi extends Model
     public function jadwal()
     {
         return $this->belongsTo(Jadwal::class, 'jadwal_id');
+    }
+    public function user()
+    {
+        return $this->belongsto(User::class, 'login');
+
     }
 }
