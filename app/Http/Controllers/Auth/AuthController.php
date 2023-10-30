@@ -4,13 +4,14 @@ namespace App\Http\Controllers\Auth;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use PhpParser\Node\Stmt\TryCatch;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use App\Http\Controllers\Controller;;
 
+use App\Http\Controllers\Controller;;
+use App\Http\Resources\User\UserResource;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
-use PhpParser\Node\Stmt\TryCatch;
 
 class AuthController extends Controller
 {
@@ -92,7 +93,32 @@ class AuthController extends Controller
         // }
 
     }
+        public function GetUser()
+    {
+        if (Auth::user()->role== 1 )
+        {
 
+            // $user= User::where('role',Auth::user()->role)->get();
+            $user = user::orderBy('created_at', 'desc')->where('role','=',2)->get();
+        if ($user) {
+            // var_dump($user);
+            // exit;
+            return UserResource::collection($user);
+
+
+            }
+            return response()->json(array(
+                'message' => 'reservasi tidak ditemukan',
+                'status' => 'not found',
+                'code' => 500,
+            ));
+        }
+        return response()->json(array(
+            'message' => 'Anda tidak memiliki akses',
+            'status' => 'not exist',
+            'code' => 405,
+        ));
+    }
     //logout
     public function logout(Request $request)
     {
