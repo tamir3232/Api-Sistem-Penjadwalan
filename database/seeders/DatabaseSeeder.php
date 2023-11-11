@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
             // MatkulSeeder::class,
             // PengampuSeeder::class,
             // JadwalSeeder::class,
-            // ContraintSeeder::class,
+            ContraintSeeder::class,
         ]);
     }
 }
