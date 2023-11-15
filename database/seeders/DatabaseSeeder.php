@@ -20,8 +20,8 @@ class DatabaseSeeder extends Seeder
             // KelasSeeder::class,
             // MatkulSeeder::class,
             // PengampuSeeder::class,
-            // JadwalSeeder::class,
-            ContraintSeeder::class,
+            JadwalSeeder::class,
+            // ContraintSeeder::class,
         ]);
     }
 }
