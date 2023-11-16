@@ -19,7 +19,7 @@ class ReservasiController extends Controller
      */
     public function index()
     {
-        $reservasi = Reservasi::get();
+        $reservasi = Reservasi::orderBy('created_at', 'desc')->get();
         if ($reservasi) {
             return ReservasiResource::collection($reservasi);
         }
@@ -38,17 +38,15 @@ class ReservasiController extends Controller
     public function MyReservasi()
     {
 
-        $reservasi = Reservasi::where('reservasiby_id',Auth::user()->id)->get();
+        $reservasi = Reservasi::where('reservasiby_id', Auth::user()->id)->get();
         if ($reservasi) {
             return ReservasiResource::collection($reservasi);
-            }
-            return response()->json(array(
-                'message' => 'reservasi tidak ditemukan',
-                'status' => 'not found',
-                'code' => 500,
-            ));
-
-
+        }
+        return response()->json(array(
+            'message' => 'reservasi tidak ditemukan',
+            'status' => 'not found',
+            'code' => 500,
+        ));
     }
     /**
      * Display the specified resource.
