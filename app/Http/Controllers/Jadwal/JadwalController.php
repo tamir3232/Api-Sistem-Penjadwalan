@@ -8,18 +8,19 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\Jadwal\JadwalResource;
+use App\Models\Hari;
 
 class JadwalController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     // {   if (Auth::user()->role == 1)
     {
-        $jadwal = Jadwal::get();
+        $hari = Hari::where('nama', $request->hari)->first();
+        $jadwal = Jadwal::where('hari_id', $hari->id)->get();
         return JadwalResource::collection($jadwal);
-        return $jadwal;
         // }
         // return['Anda tidak memiliki akses'];
     }
