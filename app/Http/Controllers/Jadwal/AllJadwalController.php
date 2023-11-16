@@ -6,13 +6,16 @@ use App\Models\Jadwal;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Jadwal\JadwalResource;
+use App\Models\Hari;
+
+
 
 class AllJadwalController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $jadwal = Jadwal::get();
+        $hari = Hari::where('nama', $request->hari)->first();
+        $jadwal = Jadwal::where('hari_id', $hari->id)->get();
         return JadwalResource::collection($jadwal);
-            return $jadwal;
     }
 }
