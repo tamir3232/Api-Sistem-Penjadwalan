@@ -17,7 +17,7 @@ class PengampuControllers extends Controller
      */
     public function index()
     {
-        $pengampu = Pengampu::get();
+        $pengampu = Pengampu::orderBy('dosen_id')->get();
         return PengampuResource::collection($pengampu);
     }
 
