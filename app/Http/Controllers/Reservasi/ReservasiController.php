@@ -76,7 +76,7 @@ class ReservasiController extends Controller
             'jam_id'            => 'required',
             'ruangan_id'        => 'required',
             'pengampu_id'       => 'required',
-
+            'tanggal_reservasi' => 'required'
 
         ]);
 
@@ -92,7 +92,7 @@ class ReservasiController extends Controller
             'jam_id'            => $request->jam_id ?? null,
             'ruangan_id'        => $request->ruangan_id ?? null,
             'pengampu_id'       => $request->pengampu_id ?? null,
-            'tanggal_reservasi' => $request->tanggal_reservasi_id ?? null,
+            'tanggal_reservasi' => $request->tanggal_reservasi ?? null,
             'reservasiby_id'    => Auth::user()->id,
             'status' => NULL,
 

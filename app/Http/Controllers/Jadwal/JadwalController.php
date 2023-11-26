@@ -9,6 +9,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\Jadwal\JadwalResource;
 use App\Models\Hari;
+use App\Models\Reservasi;
+
 
 class JadwalController extends Controller
 {
@@ -20,7 +22,13 @@ class JadwalController extends Controller
     {
         if ($request->hari) {
             $hari = Hari::where('nama', $request->hari)->first();
-            $jadwal = Jadwal::where('hari_id', $hari->id)->get();
+            $reservasi = Reservasi::where('tanggal_reservasi', $request->tanggal_reservasi)->get();
+            if (count($reservasi) > 0) {
+                $reservasiIds = $reservasi->pluck('id')->toArray();
+                $jadwal = Jadwal::where('hari_id', $hari->id)->Where('reservasi_id', null)->orWhereIn('reservasi_id', $reservasiIds)->get();
+            } else {
+                $jadwal = Jadwal::where('hari_id', $hari->id)->where('reservasi_id', null)->get();
+            }
         } else {
             $jadwal = Jadwal::get();
         }

@@ -24,7 +24,7 @@ class Reservasi extends Model
         'pengampu_id',
         'reservasiby_id',
         'status',
-
+        'tanggal_reservasi'
     ];
     public function hari()
     {
@@ -49,6 +49,5 @@ class Reservasi extends Model
     public function user()
     {
         return $this->belongsto(User::class, 'login');
-
     }
 }
