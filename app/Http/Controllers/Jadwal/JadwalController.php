@@ -18,8 +18,12 @@ class JadwalController extends Controller
     public function index(Request $request)
     // {   if (Auth::user()->role == 1)
     {
-        $hari = Hari::where('nama', $request->hari)->first();
-        $jadwal = Jadwal::where('hari_id', $hari->id)->get();
+        if ($request->hari) {
+            $hari = Hari::where('nama', $request->hari)->first();
+            $jadwal = Jadwal::where('hari_id', $hari->id)->get();
+        } else {
+            $jadwal = Jadwal::get();
+        }
         return JadwalResource::collection($jadwal);
         // }
         // return['Anda tidak memiliki akses'];
