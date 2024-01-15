@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Contraint extends Model
 {
     use HasFactory, HasUuids;
-    protected $table ='contraint';
+    protected $table = 'contraint';
     protected $fillable =
     [
 
@@ -28,11 +28,10 @@ class Contraint extends Model
     }
     public function hari()
     {
-        return $this->hasMany(Hari::class, 'hari_id');
+        return $this->belongsTo(Hari::class, 'hari_id');
     }
     public function jam()
     {
-        return $this->hasMany(Jam::class, 'jam_id');
+        return $this->belongsTo(Jam::class, 'jam_id');
     }
-
 }

@@ -10,23 +10,22 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Hari extends Model
 {
-    use HasFactory,HasUuids;
-    protected $table='hari';
+    use HasFactory, HasUuids;
+    protected $table = 'hari';
     protected $fillable =
     [
         'nama',
     ];
     public function jadwal()
     {
-        return $this->belongsTo(Jadwal::class,'jadwal_id');
+        return $this->hasMany(Jadwal::class, 'hari_id');
     }
     public function reservasi()
     {
-        return $this->hasMany(Reservasi::class, 'reservasi_id');
+        return $this->hasMany(Reservasi::class, 'hari_id');
     }
     public function contraint()
     {
-        return $this->belongsTo(Contraint::class,'contraint_id');
+        return $this->hasMany(Contraint::class, 'hari_id');
     }
-
 }

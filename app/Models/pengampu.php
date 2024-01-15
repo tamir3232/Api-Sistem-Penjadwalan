@@ -21,6 +21,7 @@ class pengampu extends Model
     protected $fillable =
     [
         'id',
+        'dosen_id',
         'reservasi_id',
         'matakuliah_id',
         'kelas_id'
@@ -37,15 +38,15 @@ class pengampu extends Model
     }
     public function kelas()
     {
-        return $this->hasMany(Kelas::class, 'kelas_id');
+        return $this->belongsTo(Kelas::class, 'kelas_id');
     }
     public function jadwal()
     {
-        return $this->belongsTo(Jadwal::class, 'jadwal_id');
+        return $this->hasMany(Jadwal::class, 'pengampu_id');
     }
     public function reservasi()
     {
-        return $this->hasMany(Reservasi::class,'reservasi_id');
+        return $this->hasMany(Reservasi::class, 'pengampu_id');
     }
     // public function contraint()
     // {

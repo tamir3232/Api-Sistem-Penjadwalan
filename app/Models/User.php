@@ -27,7 +27,7 @@ class User extends Authenticatable
         'role',
         'status',
     ];
-    
+
 
 
 
@@ -52,9 +52,6 @@ class User extends Authenticatable
     ];
     public function reservasi()
     {
-        return $this->hasmany(Reservasi::class, 'reservasiby_id');
-
+        return $this->hasMany(Reservasi::class, 'reservasiby_id');
     }
-
-
 }

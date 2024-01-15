@@ -9,20 +9,17 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Ruangan extends Model
 {
-    use HasFactory,HasUuids;
+    use HasFactory, HasUuids;
     protected $table = 'ruangan';
     protected $fillable = [
         'nama',
     ];
     public function jadwal()
     {
-        $this->belongsTo(Jadwal::class,'jadwal_id');
+        $this->hasMany(Jadwal::class, 'ruangan_id');
     }
     public function reservasi()
     {
-        $this->hasMany(Reservasi::class,'reservasi_id');
+        $this->hasMany(Reservasi::class, 'ruangan_id');
     }
-
-
-
 }

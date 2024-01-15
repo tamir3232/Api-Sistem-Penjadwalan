@@ -94,7 +94,7 @@ class ReservasiController extends Controller
             'pengampu_id'       => $request->pengampu_id ?? null,
             'tanggal_reservasi' => $request->tanggal_reservasi ?? null,
             'reservasiby_id'    => Auth::user()->id,
-            'status' => NULL,
+            'status'            => NULL,
 
         ]);
         return $add;

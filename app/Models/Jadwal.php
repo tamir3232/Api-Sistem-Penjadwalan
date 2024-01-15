@@ -16,7 +16,7 @@ class Jadwal extends Model
 {
     use HasFactory, HasUuids;
 
-    protected $table ='jadwal';
+    protected $table = 'jadwal';
     protected $fillable =
     [
         'hari_id',
@@ -27,23 +27,22 @@ class Jadwal extends Model
     ];
     public function hari()
     {
-        return $this->hasmany(Hari::class, 'hari_id');
+        return $this->belongsTo(Hari::class, 'hari_id');
     }
     public function jam()
     {
-        return $this->hasmany(Jam::class, 'jam_id');
+        return $this->belongsTo(Jam::class, 'jam_id');
     }
     public function ruangan()
     {
-        return $this->hasmany(Ruangan::class, 'ruangan_id');
+        return $this->belongsTo(Ruangan::class, 'ruangan_id');
     }
     public function pengampu()
     {
-        return $this->hasMany(pengampu::class, 'pengampu_id');
+        return $this->belongsTo(pengampu::class, 'pengampu_id');
     }
     public function reservasi()
     {
-        return $this->hasMany(Reservasi::class, 'reservasi_id');
+        return $this->belongsTo(Reservasi::class, 'reservasi_id');
     }
-
 }

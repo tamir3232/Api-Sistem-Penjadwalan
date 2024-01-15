@@ -11,25 +11,24 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Jam extends Model
 {
-    use HasFactory,HasUuids;
-    protected $table ='jam';
+    use HasFactory, HasUuids;
+    protected $table = 'jam';
     protected $fillable =
     [
-    'range_jam',
-    'awal',
-    'akhir'
+        'range_jam',
+        'awal',
+        'akhir'
     ];
     public function jadwal()
     {
-        return $this->belongsTo(Jadwal::class,'jadwal_id');
+        return $this->hasMany(Jadwal::class, 'jam_id');
     }
-    public function jam()
+    public function Reservasi()
     {
-        return $this->belongsTo(Reservasi::class,'reservasi_id');
+        return $this->hasMany(Reservasi::class, 'jam_id');
     }
     public function contraint()
     {
-        return $this->belongsTo(Contraint::class,'contraint_id');
+        return $this->hasMany(Contraint::class, 'jam_id');
     }
-
 }
