@@ -16,11 +16,11 @@ class DatabaseSeeder extends Seeder
             // Waktu::class,
             // hari::class,
             // RuanganSeeder::class,
-            // DosenSeeder::class,
+            DosenSeeder::class,
             // KelasSeeder::class,
             // MatkulSeeder::class,
             // PengampuSeeder::class,
-            JadwalSeeder::class,
+            // JadwalSeeder::class,
             // ContraintSeeder::class,
         ]);
     }

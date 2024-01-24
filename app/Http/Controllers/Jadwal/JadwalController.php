@@ -21,20 +21,7 @@ class JadwalController extends Controller
      * Display a listing of the resource.
      */
 
-     public function export(Request $request)
-    {
-         $excel = Excel::download(new JadwalExport($request->id),"Jadwal Perkuliahan.xlsx");
-         if ($excel){
-            return response()->json([
-                'code' => 302,
-                'message' => 'excel tersedia',
-            ]);
-         }
-         return response()->json([
-            'code' => 404,
-            'message' => 'excel tidak ditemukan',
-         ]);
-     }
+     
 
 
 

@@ -21,3 +21,6 @@ yarn-error.log
 /nginx
 
 /mysql
+
+.composer.json
+.composer.lock
