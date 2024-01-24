@@ -27,9 +27,9 @@ class ResetController extends Controller
     Jadwal::truncate();
     Contraint::truncate();
     Reservasi::truncate();
-    Kelas::truncate();
-    Matakuliah::truncate();
     pengampu::truncate();
+    // Kelas::truncate();
+    // Matakuliah::truncate();
 
     return response()->json(array(
         'message'   => 'reset berhasil',

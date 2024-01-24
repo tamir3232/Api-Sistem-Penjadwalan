@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers\Jadwal;
 
+use App\Models\Hari;
 use App\Models\Jadwal;
+use App\Models\Reservasi;
 use Illuminate\Http\Request;
+use App\Exports\ExportJadwal;
+use App\Exports\JadwalExport;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Resources\Jadwal\JadwalResource;
-use App\Models\Hari;
-use App\Models\Reservasi;
 
 
 class JadwalController extends Controller
@@ -17,6 +20,24 @@ class JadwalController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+     public function export(Request $request)
+    {
+         $excel = Excel::download(new JadwalExport($request->id),"Jadwal Perkuliahan.xlsx");
+         if ($excel){
+            return response()->json([
+                'code' => 302,
+                'message' => 'excel tersedia',
+            ]);
+         }
+         return response()->json([
+            'code' => 404,
+            'message' => 'excel tidak ditemukan',
+         ]);
+     }
+
+
+
     public function index(Request $request)
     // {   if (Auth::user()->role == 1)
     {
@@ -31,6 +52,10 @@ class JadwalController extends Controller
             }
         } else {
             $jadwal = Jadwal::get();
+        }
+
+        if (!$hari){
+            return[];
         }
         return JadwalResource::collection($jadwal);
         // }

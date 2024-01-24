@@ -36,6 +36,8 @@ Route::post('register', [AuthController::class, 'register']);
 Route::get('cek-jadwal', [AllJadwalController::class, 'index']);
 Route::post('login', [App\Http\Controllers\Auth\AuthController::class, 'login']);
 
+Route::get('export',[JadwalController::class, 'export']);
+
 
 
 
