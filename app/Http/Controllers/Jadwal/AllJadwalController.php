@@ -18,18 +18,18 @@ class AllJadwalController extends Controller
 
     public function export(Request $request)
     {
-        $excel = Excel::download(new JadwalExport($request->id), "Jadwal Perkuliahan.xlsx");
-        if ($excel) {
-            return response()->json([
-                'code' => 302,
-                'message' => 'excel tersedia',
-                'data' => $excel
-            ]);
-        }
-        return response()->json([
-            'code' => 404,
-            'message' => 'excel tidak ditemukan',
-        ]);
+        return Excel::download(new JadwalExport($request->id), "Jadwal Perkuliahan.xlsx");
+        // if ($excel) {
+        //     return response()->json([
+        //         'code' => 302,
+        //         'message' => 'excel tersedia',
+        //         'data' => $excel
+        //     ]);
+        // }
+        // return response()->json([
+        //     'code' => 404,
+        //     'message' => 'excel tidak ditemukan',
+        // ]);
     }
     public function index(Request $request)
     {
