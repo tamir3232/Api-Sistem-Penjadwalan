@@ -62,6 +62,14 @@ class JadwalController extends Controller
                 'pengampu_id' => 'required',
 
             ]);
+            $jadwalExist = Jadwal::where('hari_id', $request->hari_id)->where('jam_id', $request->jam_id)->where('ruangan_id', $request->ruangan_id)->first();
+            if ($jadwalExist) {
+                return response()->json([
+                    'message' => 'Jadwal Dimasukan Tidak Tersedia Lagi, Silahkan Reservasi Jadwal Yang kosong',
+                    'status' => 'bad request',
+                    'code' => 400,
+                ]);
+            }
             $add = Jadwal::create([
                 'hari_id'       => $request->hari_id,
                 'jam_id'        => $request->jam_id,
@@ -71,6 +79,11 @@ class JadwalController extends Controller
             ]);
             return $add;
         }
+        // return response()->json([
+        //     'message' => 'Anda Tidak Memiliki Akses',
+        //     'status' => 'Unauthorized',
+        //     'code' => 401,
+        // ]);
         return ['Anda tidak memiliki akses',];
     }
 
@@ -123,7 +136,7 @@ class JadwalController extends Controller
                 $jadwalexist->delete();
                 return ['Jadwal berhasil di hapus'];
             }
-            return ['jadwal tidak ditemukan'];
+            return ['Jadwal tidak ditemukan'];
         }
         return ['Anda tidak memiliki akses'];
     }

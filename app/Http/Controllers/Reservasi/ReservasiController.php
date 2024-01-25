@@ -24,7 +24,7 @@ class ReservasiController extends Controller
             return ReservasiResource::collection($reservasi);
         }
         return response()->json(array(
-            'message' => 'reservasi tidak ditemukan',
+            'message' => 'Reservasi tidak ditemukan',
             'status' => 'not found',
             'code' => 500,
         ));
@@ -43,7 +43,7 @@ class ReservasiController extends Controller
             return ReservasiResource::collection($reservasi);
         }
         return response()->json(array(
-            'message' => 'reservasi tidak ditemukan',
+            'message' => 'Reservasi tidak ditemukan',
             'status' => 'not found',
             'code' => 500,
         ));
@@ -84,7 +84,7 @@ class ReservasiController extends Controller
         $jadwalExist = Jadwal::where('hari_id', $request->hari_id)->where('jam_id', $request->jam_id)->where('ruangan_id', $request->ruangan_id)->first();
 
         if ($jadwalExist) {
-            throw new Exception('JADWAL YANG DIINPUTKAN TIDAK TERSEDIA LAGI');
+            throw new Exception('Jadwal Dimasukan Oleh Admin Tidak Tersedia Lagi, Silahkan Reservasi Jadwal Yang kosong');
         }
 
         $add = Reservasi::create([
