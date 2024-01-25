@@ -18,6 +18,8 @@ class AllJadwalController extends Controller
 
     public function export(Request $request)
     {
+
+
         return Excel::download(new JadwalExport($request->id), "Jadwal Perkuliahan.xlsx");
         // if ($excel) {
         //     return response()->json([
