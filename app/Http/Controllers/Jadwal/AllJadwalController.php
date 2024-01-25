@@ -18,6 +18,8 @@ class AllJadwalController extends Controller
 
     public function export(Request $request)
     {
+
+
         return Excel::download(new JadwalExport($request->id), "Jadwal Perkuliahan.xlsx");
         // if ($excel) {
         //     return response()->json([
@@ -35,7 +37,7 @@ class AllJadwalController extends Controller
     {
         $hari = Hari::where('nama', $request->hari)->first();
         if (!$hari) {
-            return [];
+            return JadwalResource::collection([]);
         }
         $jadwal = Jadwal::where('hari_id', $hari->id)->get();
         return JadwalResource::collection($jadwal);
