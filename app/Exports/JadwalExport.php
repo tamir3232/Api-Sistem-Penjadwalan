@@ -23,10 +23,11 @@ class JadwalExport implements FromCollection,WithHeadings
     {
         return [
             'Hari',
-            'jam',
-            'ruangan',
-            'pengampu',
-            'reservasi',
+            'Jam',
+            'Ruangan',
+            'Dosen',
+            'Matakuliah',
+            'Kelas',
         ];
     }
 
@@ -38,13 +39,20 @@ class JadwalExport implements FromCollection,WithHeadings
             ->join('pengampu', 'jadwal.pengampu_id', '=', 'pengampu.id')
             ->join('jam', 'jadwal.jam_id', '=','jam_id')
             ->join('dosens', 'pengampu.dosen_id', '=', 'dosens.id')
+            ->join('matakuliah', 'pengampu.matakuliah_id', '=', 'matakuliah.id')
+            ->join('kelas', 'pengampu.kelas_id', '=', 'kelas.id')
+            // ->join('dosens', 'pengampu.dosen_id', '=', 'dosens.id')
 
             ->select(
                 'hari.nama as hari_nama',
                 DB::raw('CONCAT(jam.awal, \' - \', jam.akhir) as jam_range'), // Menggunakan tanda kutip tunggal
                 'ruangan.nama as ruangan_nama',
                 'dosens.name as dosens_name',
-                'jadwal.reservasi_id',
+                DB::raw('CONCAT(matakuliah.kode_matkul, \' - \' ,matakuliah.nama) as matakuliah_range'),
+                DB::raw('CONCAT(kelas.nama, \'  Semester \', kelas.semester) as kelas_range'),
+
+
+                
             )
             ->get();
 

@@ -15,12 +15,13 @@ class ConfirmReservasiController extends Controller
     {
         if (Auth::user()->role == 1) {
             $Reservasi = Reservasi::where('id', $request->id)->first();
+            // var_dump($Reservasi)
             if ($request->status == 'Diterima') {
 
                 $jadwalExist = Jadwal::where('hari_id', $Reservasi->hari_id)->where('jam_id', $Reservasi->jam_id)->where('ruangan_id', $Reservasi->ruangan_id)->first();
 
                 if ($jadwalExist) {
-                    throw new Exception('JADWAL YANG DIINPUTKAN TIDAK TERSEDIA LAGI');
+                    throw new Exception('Jadwal Dimasukan Tidak Tersedia Lagi, Silahkan Reservasi Jadwal Yang kosong');
                 } else {
                     $addJadwal = Jadwal::create([
                         'hari_id'       => $Reservasi->hari_id,
