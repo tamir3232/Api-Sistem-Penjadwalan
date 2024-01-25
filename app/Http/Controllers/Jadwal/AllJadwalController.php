@@ -35,7 +35,7 @@ class AllJadwalController extends Controller
     {
         $hari = Hari::where('nama', $request->hari)->first();
         if (!$hari) {
-            return [];
+            return JadwalResource::collection([]);
         }
         $jadwal = Jadwal::where('hari_id', $hari->id)->get();
         return JadwalResource::collection($jadwal);

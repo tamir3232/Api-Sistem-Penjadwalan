@@ -21,7 +21,7 @@ class JadwalController extends Controller
      * Display a listing of the resource.
      */
 
-     
+
 
 
 
@@ -30,6 +30,9 @@ class JadwalController extends Controller
     {
         if ($request->hari) {
             $hari = Hari::where('nama', $request->hari)->first();
+            if (!$hari) {
+                return JadwalResource::collection([]);
+            }
             $reservasi = Reservasi::where('tanggal_reservasi', $request->tanggal_reservasi)->get();
             if (count($reservasi) > 0) {
                 $reservasiIds = $reservasi->pluck('id')->toArray();
@@ -41,9 +44,6 @@ class JadwalController extends Controller
             $jadwal = Jadwal::get();
         }
 
-        if (!$hari){
-            return[];
-        }
         return JadwalResource::collection($jadwal);
         // }
         // return['Anda tidak memiliki akses'];
