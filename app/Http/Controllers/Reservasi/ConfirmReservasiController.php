@@ -36,7 +36,7 @@ class ConfirmReservasiController extends Controller
                 $Reservasi->update([
                     'status' => $request->status ?? $Reservasi->status,
                 ]);
-                return ['Reservasi berhasil di update'];
+                return ['Reservasi berhasil untuk di update'];
             }
             return ['Reservasi tidak ditemukan'];
         }
