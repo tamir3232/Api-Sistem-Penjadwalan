@@ -68,7 +68,7 @@ class JadwalController extends Controller
                     'message' => 'Jadwal Dimasukan Tidak Tersedia Lagi, Silahkan Reservasi Jadwal Yang kosong',
                     'status' => 'bad request',
                     'code' => 400,
-                ]);
+                ], 400);
             }
             $add = Jadwal::create([
                 'hari_id'       => $request->hari_id,
@@ -108,16 +108,30 @@ class JadwalController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        DB::beginTransaction();
         if (Auth::user()->role == 1) {
             $jadwalexist = Jadwal::where('id', $id)->first();
+
             if ($jadwalexist) {
-                $jadwalexist->update([
+                DB::table('jadwal')->where('id', $id)->update([
                     'hari_id'       => $request->hari_id ?? $jadwalexist->hari_id,
                     'jam_id'        => $request->jam_id ?? $jadwalexist->jam_id,
                     'ruangan_id'    => $request->ruangan_id  ?? $jadwalexist->ruangan_id,
                     'pengampu_id'   => $request->pengampu_id ?? $jadwalexist->pengampu_id,
                     'reservasi_id'  => $request->reservasi_id ?? $jadwalexist->reservasi_id
                 ]);
+                $jadwalexist = Jadwal::where('id', $id)->first();
+                $checkedJadwal = Jadwal::where('hari_id', $jadwalexist->hari_id)->where('jam_id', $jadwalexist->jam_id)->where('ruangan_id', $jadwalexist->ruangan_id)->where('id', '!=', $jadwalexist->id)->first();
+
+                if ($checkedJadwal) {
+                    DB::rollBack();
+                    return response()->json([
+                        'message' => 'Jadwal Dimasukan Tidak Tersedia Lagi, Silahkan Reservasi Jadwal Yang kosong',
+                        'status' => 'bad request',
+                        'code' => 400,
+                    ], 400);
+                }
+                DB::commit();
                 return ['jadwal berhasil di update', $jadwalexist,];
             }
             return ['Jadwal tidak ditemukan'];
