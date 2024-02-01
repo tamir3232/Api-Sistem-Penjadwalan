@@ -57,6 +57,17 @@ class JadwalExport implements FromCollection, WithHeadings, WithMapping
             }
 
             // Jika ruangan sama, lanjutkan dengan pengurutan berdasarkan jam
+
+            // Jika ruangan sama, lanjutkan dengan pengurutan berdasarkan jam
+            $timesOrder = [
+                '08:00', '08:50', '09:40', '10:30', '11:20', '12:10',
+                '13:00', '13:50', '14:40', '15:30', '16:20'
+            ];
+            $aTimeIndex = array_search($a->jam->awal, $timesOrder);
+            $bTimeIndex = array_search($b->jam->awal, $timesOrder);
+
+            // Kembalikan perbandingan berdasarkan urutan jam
+            return $aTimeIndex - $bTimeIndex;
         });
 
         // Ambil hasil pengurutan
