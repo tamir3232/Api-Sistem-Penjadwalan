@@ -2,23 +2,19 @@
 
 namespace App\Exports;
 
-use App\Models\Hari;
 use App\Models\Jadwal;
-use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Concerns\WithHeadings;
-use App\Http\Resources\Jadwal\JadwalResource;
+use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\WithMapping;
+use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 
-class JadwalExport implements FromCollection,WithHeadings
+class JadwalExport implements FromCollection,WithHeadings,WithMapping
 {
     /**
     * @return \Illuminate\Support\Collection
     */
-    protected $id;
-
- function __construct($id) {
-        $this->id = $id;
- }
+   use Exportable;
     public function headings(): array
     {
         return [
@@ -33,31 +29,25 @@ class JadwalExport implements FromCollection,WithHeadings
 
     public function collection()
     {
-        $jadwalData = DB::table('jadwal')
-            ->join('hari', 'jadwal.hari_id', '=', 'hari.id')
-            ->join('ruangan', 'jadwal.ruangan_id', '=', 'ruangan.id')
-            ->join('pengampu', 'jadwal.pengampu_id', '=', 'pengampu.id')
-            ->join('jam', 'jadwal.jam_id', '=','jam_id')
-            ->join('dosens', 'pengampu.dosen_id', '=', 'dosens.id')
-            ->join('matakuliah', 'pengampu.matakuliah_id', '=', 'matakuliah.id')
-            ->join('kelas', 'pengampu.kelas_id', '=', 'kelas.id')
-            // ->join('dosens', 'pengampu.dosen_id', '=', 'dosens.id')
 
-            ->select(
-                'hari.nama as hari_nama',
-                DB::raw('CONCAT(jam.awal, \' - \', jam.akhir) as jam_range'), // Menggunakan tanda kutip tunggal
-                'ruangan.nama as ruangan_nama',
-                'dosens.name as dosens_name',
-                DB::raw('CONCAT(matakuliah.kode_matkul, \' - \' ,matakuliah.nama) as matakuliah_range'),
-                DB::raw('CONCAT(kelas.nama, \'  Semester \', kelas.semester) as kelas_range'),
+        return Jadwal::orderBy('hari_id')->orderBy('jam_id')->orderBy('ruangan_id')->get();
+        // return Jadwal::orderBy('jadwal')->get();
 
-
-                
-            )
-            ->get();
-
-        return $jadwalData;
     }
+
+    public function map($jadwal): array
+    {
+        return[
+            'Hari' => $jadwal->hari->nama,
+            'Jam' => $jadwal->jam->awal . ' - ' . $jadwal->jam->akhir,
+            'Ruangan' => $jadwal->ruangan->nama,
+            'Dosen' => $jadwal->pengampu->dosen->name,
+            'Mata Kuliah' => $jadwal->pengampu->matakuliah->kode_matkul.'-'.$jadwal->pengampu->matakuliah->nama,
+            'Kelas' => $jadwal->pengampu->kelas->nama.' Semester '.$jadwal->pengampu->kelas->semester,
+        ];
+    }
+
+
 
 
 
